@@ -3,7 +3,7 @@ import { Form, ErrorMessage, Field, Formik } from "formik";
 import * as yup from "yup";
 import { BsFillKeyFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import Signup from "./Signup";
+import cab4 from "../resources/images/cab4.jpg";
 // formik yup validation
 const schema = yup.object().shape({
   username: yup.string().required("username is required"),
@@ -30,9 +30,17 @@ const Login = () => {
     // },
   ];
   return (
-    <div>
-      <div>{/* <h2>Login Form </h2> */}</div>
-      <div className="">
+    <div className="">
+      <div
+        className=""
+        style={{
+          backgroundImage: `url(${cab4})`,
+          backgroundRepeat: "no-repeat",
+          height: "900px",
+          width: "600px",
+          // opacity: "0.5",
+        }}
+      >
         <Formik
           initialValues={{
             username: "",
@@ -47,15 +55,16 @@ const Login = () => {
             return (
               <Form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-4 justify-center items-center absolute top-40 left-64 capitalize border-none shadow-md shadow-slate-500 rounded-md bg-red-600 h-72 w-96"
+                className="flex flex-col gap-4 justify-center items-center absolute top-40 left-64 capitalize border-none shadow-lg shadow-slate-500 rounded-lg bg-white h-fit w-96 py-8 backdrop-filter backdrop-blur-md bg-opacity-20"
               >
+                <div className="flex flex-col gap-3 text-center font-bold text-2xl  py-5">
+                  <h2>Welcome</h2>
+                  <h2>Login to your account</h2>
+                </div>
                 {Data.map((val, i) => {
                   return (
                     <div key={i} className="flex flex-col gap-1 relative">
-                      <label
-                        htmlFor={val.name}
-                        className="font-bold text-white text-center"
-                      >
+                      <label htmlFor={val.name} className=" text-center">
                         {val.name}
                       </label>
                       {/* inserting icons */}
@@ -72,7 +81,7 @@ const Login = () => {
                         // icon={val.icon}
                         name={val.name}
                         placeholder={`enter your ${val.name}`}
-                        className="border-none rounded-lg shadow-md shadow-white outline-none py-2.5 px-12 capitalize"
+                        className="border-b border-black rounded-sm shadow-md shadow-white focus:outline-none focus:border-black py-2.5 px-12 capitalize"
                       />
                       <ErrorMessage
                         name={val.name}
@@ -84,14 +93,14 @@ const Login = () => {
                 })}
                 <button
                   type="submit"
-                  className="border-none py-2 px-10 rounded-lg text-xl font-semibold shadow-md shadow-white text-white"
+                  className="border-none py-2 px-10 rounded-lg text-xl font-semibold shadow-md shadow-white "
                 >
                   Login
                 </button>
 
-                <div className="flex gap-5 capitalize text-white">
+                <div className="flex gap-5 capitalize ">
                   <h4>forgot password?</h4>
-                  <a href={Signup}>Create new account</a>
+                  {/* <a href={Signup}>Create new account</a> */}
                 </div>
               </Form>
             );
