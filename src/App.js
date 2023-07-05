@@ -5,6 +5,8 @@ import Layout from "./hoc/Layout/Layout";
 import About from "./components/homepage/About";
 import Contact from "./components/homepage/Contact";
 import AvailableCabs from "./components/homepage/AvailableCabs";
+import Signup from "./components/login/Signup";
+// import Dashboard from "./components/navbar/Dashboard";
 
 function App() {
   return (
@@ -15,10 +17,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/available cabs" element={<AvailableCabs />} />
+            <Route path="/availablecabs" element={<AvailableCabs />} />
+            {/* <Route path="/Dashboard" element={<Dashboard />} /> */}
           </Route>
         </Routes>
       </Router>
+      {/* <Signup /> */}
     </div>
   );
 }

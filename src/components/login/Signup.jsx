@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Field, ErrorMessage, Formik } from "formik";
 import * as yup from "yup";
-import cab4 from "../resources/images/cab4.jpg";
 
 const schema = yup.object().shape({
   FirstName: yup.string().required("firstname is required"),
@@ -16,6 +15,10 @@ const Signup = () => {
   const Data = [
     {
       name: "FirstName",
+      type: "text",
+    },
+    {
+      name: "MiddleName(optional)",
       type: "text",
     },
     {
@@ -42,25 +45,49 @@ const Signup = () => {
       name: "Contact",
       type: "number",
     },
+    {
+      name: "Contact",
+      type: "number",
+    },
+    {
+      name: "Contact",
+      type: "number",
+    },
+    {
+      name: "Gender",
+      as: "select",
+      genderOptions: [],
+    },
+  ];
+
+  //gender options
+  const genderOptions = [
+    {
+      value: "select your gender",
+    },
+    {
+      value: "male",
+    },
+    {
+      value: "female",
+    },
+    {
+      value: "other",
+    },
   ];
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div
-        className="w-fit p-8 bg-white rounded-lg shadow-lg backdrop-filter backdrop-blur-lg bg-opacity-20"
-        style={{
-          backgroundImage: `url(${cab4})`,
-          backgroundRepeat: "no-repeat",
-          // height: "900px",
-          width: "600px",
-          // opacity: "0.7",
-        }}
-      >
+    <div className="flex items-center justify-center ">
+      <div className="w-fit p-8 bg-slate-300 border border-primary mt-5 rounded-lg shadow-lg shadow-purple-700 backdrop-filter backdrop-blur-lg bg-opacity-20">
         <Formik
           initialValues={{
             FirstName: "",
             LastName: "",
             email: "",
             password: "",
+            cpassword: "",
+            address: "",
+            contact: "",
+            gender: "",
           }}
           validationSchema={schema}
           onSubmit={(val, resetform) => {
@@ -71,27 +98,64 @@ const Signup = () => {
             return (
               <Form onSubmit={handleSubmit}>
                 <div>
-                  <h2 className="text-2xl font-bold mb-6">Signup</h2>
+                  <h2 className="text-2xl text-center border-b-2 border-primary font-bold mb-6">
+                    Create an account - Client
+                  </h2>
                 </div>
-                {Data.map((val, i) => {
-                  return (
-                    <div key={i} className="flex flex-col py-3 items-center">
-                      <label htmlFor={val.name}>{val.name}</label>
-                      <Field
-                        type={val.type}
-                        // icon={val.icon}
-                        name={val.name}
-                        placeholder={`enter your ${val.name}`}
-                        className="border-b border-black rounded-sm shadow-md shadow-white focus:outline-none focus:border-black py-2.5 px-12 capitalize"
-                      />
-                      <ErrorMessage
-                        name={val.name}
-                        component={"div"}
-                        className="text-red-500"
-                      />
-                    </div>
-                  );
-                })}
+                <div className="grid grid-cols-3 gap-16 col-start-3  px-40 py-10">
+                  {Data.map((val, i) => {
+                    if (val.as === "select") {
+                      return (
+                        <div key={i}>
+                          <div>
+                            <div>
+                              <label htmlFor={val.name}>{val.name}</label>
+                            </div>
+                            <div>
+                              <Field as={val.as} name={val.name}>
+                                {genderOptions.map((option, index) => {
+                                  return (
+                                    <option
+                                      key={index}
+                                      value={option.value}
+                                      className=""
+                                    >
+                                      {option.value}
+                                    </option>
+                                  );
+                                })}
+                              </Field>
+                            </div>
+                          </div>
+                          <ErrorMessage
+                            name={val.name}
+                            component={"div"}
+                            className="text-red-500 text-center text-sm"
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={i} className="">
+                          <div className="flex flex-col ">
+                            <label htmlFor={val.name}>{val.name}</label>
+                            <Field
+                              type={val.type}
+                              name={val.name}
+                              placeholder={`enter your ${val.name}`}
+                              className="border-b-2 border-primary rounded-sm shadow-md shadow-white focus:outline-none focus:border-black py-2 px-12 capitalize"
+                            />
+                          </div>
+                          <ErrorMessage
+                            name={val.name}
+                            component={"div"}
+                            className="text-red-500 text-center text-sm"
+                          />
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
                 <button
                   type="submit"
                   className="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 focus:outline-none"
@@ -102,30 +166,6 @@ const Signup = () => {
             );
           }}
         </Formik>
-        <form>
-          {/* <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-300">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="w-full px-3 py-2 bg-transparent border-b border-gray-300 focus:outline-none focus:border-gray-500"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-300">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-3 py-2 bg-transparent border-b border-gray-300 focus:outline-none focus:border-gray-500"
-              placeholder="Enter your password"
-            />
-          </div> */}
-        </form>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import cab4 from "../resources/images/cab4.jpg";
+import Footer from "./footer/Footer";
 const Home = () => {
   const Description = [
     {
@@ -46,20 +47,20 @@ const Home = () => {
 
       {/* body section */}
       <div>
-        <div className="py-5 text-center">
+        <div className="py-10 text-center">
           <h2 className="text-3xl font-bold">why choose us?</h2>
         </div>
         <div className="grid grid-cols-3 px-6 gap-3">
           {Description.map((val, i) => {
             return (
               <div key={i} className="">
-                <div className="flex flex-col gap-2 border-b-2 border-slate-400 shadow-lg shadow-purple-300 rounded-md">
-                  <h2 className="font-bold text-2xl text-purple-700 text-center capitalize">
+                <div className="flex flex-col gap-2 border-b-2 border-purple-400 shadow-lg h-32 shadow-purple-400 rounded-md">
+                  <h2 className="font-bold text-2xl text-purple-700 text-center  py-2 capitalize">
                     {val.title}
                   </h2>
                   <p
-                    className="text-sm px-3 py-3
-                  capitalize"
+                    className="description text-sm px-3 
+                  capitalize overflow-scroll"
                   >
                     {val.description}
                   </p>
@@ -68,6 +69,9 @@ const Home = () => {
             );
           })}
         </div>
+      </div>
+      <div className=" pt-8">
+        <Footer />
       </div>
     </div>
   );

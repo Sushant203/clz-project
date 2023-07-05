@@ -14,3 +14,8 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.description::-webkit-scrollbar{
+width: 20px;
+
+}
