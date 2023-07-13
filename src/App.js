@@ -6,7 +6,8 @@ import About from "./components/homepage/About";
 import Contact from "./components/homepage/Contact";
 import AvailableCabs from "./components/homepage/AvailableCabs";
 import Signup from "./components/login/Signup";
-// import Dashboard from "./components/navbar/Dashboard";
+import Dashboard from "./components/navbar/Dashboard";
+import Login from "./components/login/Login";
 
 function App() {
   return (
@@ -18,11 +19,14 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/availablecabs" element={<AvailableCabs />} />
-            {/* <Route path="/Dashboard" element={<Dashboard />} /> */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
       </Router>
-      {/* <Signup /> */}
+      {/* <Signup />   */}
+      {/* <Login /> */}
     </div>
   );
 }

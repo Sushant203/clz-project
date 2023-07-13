@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import logo from "../resources/images/logo.png";
 import { Link } from "react-router-dom";
-import Dashboard from "./Dashboard";
+
 const Navbar = () => {
   const NavItems = [
     {
@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <div className="flex justify-around bg-primary text-white text-center w-screen h-14 items-center capitalize">
+      <div className="flex justify-around bg-primary text-white text-center w-full h-14 items-center capitalize">
         <div>
           <img src={logo} alt="logo" className="h-16 w-18 " />
         </div>
@@ -76,13 +76,11 @@ const Navbar = () => {
               <button className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
                 Setting
               </button>
-              <button
-                onClick={handleDashboardClick}
-                className="block px-4 py-1 text-gray-800 hover:text-white hover:bg-primary"
-              >
-                Dashboard
-              </button>
-              {showDashboard && <Dashboard />}
+              <Link to="/dashboard">
+                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+                  Dashboard
+                </div>
+              </Link>
             </div>
           )}
         </h3>

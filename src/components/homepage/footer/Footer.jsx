@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0f0f0f] py-4 h-full ">
+    <footer className="bg-primary py-4 h-full ">
       <div className="container mx-auto px-4">
         <div className="flex justify-around  text-white">
           <img src={logo} alt="logos" className="h-20 w-18" />
@@ -13,7 +13,7 @@ const Footer = () => {
             {Data.map((val, i) => {
               return (
                 <div key={i}>
-                  <div className="text-white capitalize hover:border border-black hover:rounded-lg px-2 hover:translate-x-3 hover:shadow-lg hover:shadow-white">
+                  <div className="text-white capitalize hover:border-none hover:px-2 py-2 hover:rounded-lg px-2 hover:translate-x-3 hover:shadow-lg hover:shadow-white">
                     <Link to={val.path}>{val.name}</Link>
                   </div>
                 </div>

@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import cab4 from "../resources/images/cab4.jpg";
-import Footer from "./footer/Footer";
+import cab1 from "../resources/images/cab1.png";
+import cab2 from "../resources/images/cab2.png";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Home = () => {
+  // const images = [cab4, cab4, cab4]; // Array of image URLs
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentIndex((prevIndex) =>
+  //       prevIndex === images.length - 1 ? 0 : prevIndex + 1
+  //     );
+  //   }, 2000); // Change slide every 2 seconds
+
+  //   return () => clearInterval(interval);
+  // }, [images.length]);
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   const Description = [
     {
       title: "Convenience",
@@ -30,24 +56,33 @@ const Home = () => {
     },
   ];
   return (
-    <div>
+    <div className="">
       {/* upper body */}
-      <div className="border-none shadow-lg shadow-slate-400 flex justify-center items-center">
-        <div
-          className=""
-          style={{
-            backgroundImage: `url(${cab4})`,
-            backgroundRepeat: "no-repeat",
-            height: "400px",
-            width: "600px",
-            opacity: "0.4",
-          }}
-        ></div>
+      <div className="border-none shadow-lg shadow-slate-400 flex justify-center h-[41rem] items-center w-full">
+        <div className="w-full pb-8 overflow-x-hidden  ">
+          <Slider {...settings}>
+            <div className="ml-96">
+              <img src={cab4} alt="hello" />
+            </div>
+            <div className="ml-96">
+              <img src={cab4} alt="" />
+            </div>
+            <div className="ml-96">
+              <img src={cab4} alt="" />
+            </div>
+            <div className="ml-96">
+              <img src={cab2} alt="" />
+            </div>
+            <div className="ml-96">
+              <img src={cab1} alt="" />
+            </div>
+          </Slider>
+        </div>
       </div>
 
       {/* body section */}
       <div>
-        <div className="py-10 text-center">
+        <div className="py-10 text-center ">
           <h2 className="text-3xl font-bold">why choose us?</h2>
         </div>
         <div className="grid grid-cols-3 px-6 gap-3">
@@ -69,9 +104,6 @@ const Home = () => {
             );
           })}
         </div>
-      </div>
-      <div className=" pt-8">
-        <Footer />
       </div>
     </div>
   );
