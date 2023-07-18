@@ -1,21 +1,29 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/homepage/footer/Footer";
+import UserAuthContextapi from "../contextapi/Userauth";
+import Login from "../../components/login/Login";
+import Signup from "../../components/login/Signup";
 
-const Layout = (children) => {
+const Layout = () => {
+  const location = useLocation();
   return (
-    <div>
-      <div>
-        <Navbar />
-      </div>
-      <div className="min-h-screen">
-        <Outlet />
-      </div>
-      <div className="mt-10">
-        <Footer />
-      </div>
-    </div>
+    <UserAuthContextapi>
+      <>
+        {location.pathname === "/login" && <Login />}
+        {location.pathname === "/signup" && <Signup />}
+        {location.pathname !== "/login" && location.pathname !== "/signup" && (
+          <div>
+            <Navbar />
+            <div className="min-h-screen">
+              <Outlet />
+            </div>
+            <Footer />
+          </div>
+        )}
+      </>
+    </UserAuthContextapi>
   );
 };
 

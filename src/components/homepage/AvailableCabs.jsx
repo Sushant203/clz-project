@@ -96,6 +96,7 @@ const AvailableCabs = () => {
             placeholder="Search here"
             className="border outline-none hover:border-none hover:shadow-md hover:shadow-purple-500 rounded-md w-96 px-8 py-2"
             value={searchText}
+            onInput={handleSearch}
             onChange={handleInputChange}
           />
           <button

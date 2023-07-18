@@ -8,7 +8,7 @@ import AvailableCabs from "./components/homepage/AvailableCabs";
 import Signup from "./components/login/Signup";
 import Dashboard from "./components/navbar/Dashboard";
 import Login from "./components/login/Login";
-
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div>

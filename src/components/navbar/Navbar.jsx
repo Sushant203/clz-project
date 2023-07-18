@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import logo from "../resources/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const NavItems = [
     {
       name: "home",
@@ -31,7 +32,10 @@ const Navbar = () => {
   };
 
   //logout
-  const handleLogout = () => {};
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   //setting
   const handleSettings = () => {};
 
@@ -61,7 +65,7 @@ const Navbar = () => {
         {/* profile logo section */}
         <h3>
           <CgProfile
-            className="text-white text-2xl cursor-pointer"
+            className="text-white text-2xl cursor-pointer "
             onClick={toggleDropdown}
           />
           {isOpen && (

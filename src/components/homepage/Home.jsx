@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import cab4 from "../resources/images/cab4.jpg";
 import cab1 from "../resources/images/cab1.png";
 import cab2 from "../resources/images/cab2.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import UserAuthContextapi from "../../hoc/contextapi/Userauth";
 const Home = () => {
-  // const images = [cab4, cab4, cab4]; // Array of image URLs
-  // const [currentIndex, setCurrentIndex] = useState(0);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prevIndex) =>
-  //       prevIndex === images.length - 1 ? 0 : prevIndex + 1
-  //     );
-  //   }, 2000); // Change slide every 2 seconds
-
-  //   return () => clearInterval(interval);
-  // }, [images.length]);
   const settings = {
     dots: true,
     infinite: true,
@@ -56,56 +45,58 @@ const Home = () => {
     },
   ];
   return (
-    <div className="">
-      {/* upper body */}
-      <div className="border-none shadow-lg shadow-slate-400 flex justify-center h-[41rem] items-center w-full">
-        <div className="w-full pb-8 overflow-x-hidden  ">
-          <Slider {...settings}>
-            <div className="ml-96">
-              <img src={cab4} alt="hello" />
-            </div>
-            <div className="ml-96">
-              <img src={cab4} alt="" />
-            </div>
-            <div className="ml-96">
-              <img src={cab4} alt="" />
-            </div>
-            <div className="ml-96">
-              <img src={cab2} alt="" />
-            </div>
-            <div className="ml-96">
-              <img src={cab1} alt="" />
-            </div>
-          </Slider>
-        </div>
-      </div>
-
-      {/* body section */}
-      <div>
-        <div className="py-10 text-center ">
-          <h2 className="text-3xl font-bold">why choose us?</h2>
-        </div>
-        <div className="grid grid-cols-3 px-6 gap-3">
-          {Description.map((val, i) => {
-            return (
-              <div key={i} className="">
-                <div className="flex flex-col gap-2 border-b-2 border-purple-400 shadow-lg h-32 shadow-purple-400 rounded-md">
-                  <h2 className="font-bold text-2xl text-purple-700 text-center  py-2 capitalize">
-                    {val.title}
-                  </h2>
-                  <p
-                    className="description text-sm px-3 
-                  capitalize overflow-scroll"
-                  >
-                    {val.description}
-                  </p>
-                </div>
+    <UserAuthContextapi>
+      <div className="">
+        {/* upper body */}
+        <div className="border-none shadow-lg shadow-slate-400 flex justify-center h-[41rem] items-center w-full">
+          <div className="w-full pb-8 overflow-x-hidden  ">
+            <Slider {...settings}>
+              <div className="ml-96">
+                <img src={cab4} alt="hello" />
               </div>
-            );
-          })}
+              <div className="ml-96">
+                <img src={cab4} alt="" />
+              </div>
+              <div className="ml-96">
+                <img src={cab4} alt="" />
+              </div>
+              <div className="ml-96">
+                <img src={cab2} alt="" className="mix-blend-lighten" />
+              </div>
+              <div className="ml-96">
+                <img src={cab1} alt="" />
+              </div>
+            </Slider>
+          </div>
+        </div>
+
+        {/* body section */}
+        <div>
+          <div className="py-10 text-center ">
+            <h2 className="text-3xl font-bold">why choose us?</h2>
+          </div>
+          <div className="grid grid-cols-3 px-6 gap-3">
+            {Description.map((val, i) => {
+              return (
+                <div key={i} className="">
+                  <div className="flex flex-col gap-2 border-b-2 border-purple-400 shadow-lg h-32 shadow-purple-400 rounded-md">
+                    <h2 className="font-bold text-2xl text-purple-700 text-center  py-2 capitalize">
+                      {val.title}
+                    </h2>
+                    <p
+                      className="description text-sm px-3 
+                  capitalize overflow-scroll"
+                    >
+                      {val.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </UserAuthContextapi>
   );
 };
 
