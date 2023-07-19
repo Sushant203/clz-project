@@ -1,9 +1,27 @@
-import React, { useState } from "react";
-import { CgProfile } from "react-icons/cg";
+import React, { useState, useEffect } from "react";
+// import { CgDrop, CgMenu, CgProfile, CgSidebarOpen } from "react-icons/cg";
+import { AiFillCaretDown } from 'react-icons/ai';
 import logo from "../resources/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
+  const [Users, setUsers] = useState([])
+  const userid = localStorage.getItem('user_id');
+  const fetchData = () => {
+    try {
+      axios.get(`http://localhost:8000/user/${userid}`).then(res => {
+        setUsers(res.data);
+      }).catch(err => {
+        console.log(err)
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    fetchData();
+  }, [])
   const navigate = useNavigate();
   const NavItems = [
     {
@@ -37,7 +55,7 @@ const Navbar = () => {
     navigate("/login");
   };
   //setting
-  const handleSettings = () => {};
+  const handleSettings = () => { };
 
   const handleDashboardClick = () => {
     setShowDashboard(true);
@@ -64,10 +82,21 @@ const Navbar = () => {
         </div>
         {/* profile logo section */}
         <h3>
-          <CgProfile
+
+          {Users.map((val, i) => {
+            return <div key={i} className="flex gap-2 items-center">
+              <div>
+                <img src={`http://localhost:8000/${val.image}`} className="w-10 h-10 rounded-full cursor-pointer "
+                  onClick={toggleDropdown} alt="Profile" />
+              </div>
+              <div onClick={toggleDropdown} className="cursor-pointer">{val.firstname} {val.lastname}</div>
+              <div className="cursor-pointer" onClick={toggleDropdown}><AiFillCaretDown /></div>
+            </div>
+          })}
+          {/* <CgSidebarOpen
             className="text-white text-2xl cursor-pointer "
-            onClick={toggleDropdown}
-          />
+            onClick={toggleDropdown} */}
+          {/* /> */}
           {isOpen && (
             <div className="absolute right-28 mt-2  w-fit bg-white rounded-md shadow-lg ">
               <button
@@ -77,9 +106,9 @@ const Navbar = () => {
                 Logout
               </button>
               {/* settings */}
-              <button className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+              <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
                 Setting
-              </button>
+              </div>
               <Link to="/dashboard">
                 <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
                   Dashboard
