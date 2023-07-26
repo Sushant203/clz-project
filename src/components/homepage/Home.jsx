@@ -71,7 +71,7 @@ const Home = () => {
         </div>
 
         {/* body section */}
-        <div>
+        <div className="pb-5">
           <div className="py-10 text-center ">
             <h2 className="text-3xl font-bold">why choose us?</h2>
           </div>

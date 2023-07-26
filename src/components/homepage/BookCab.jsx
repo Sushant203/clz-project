@@ -2,7 +2,6 @@ import React from "react";
 import { Field, Form, ErrorMessage, Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
-// import { Toast } from "react-toastify/dist/components";
 
 const schema = yup.object().shape({
   Source: yup.string().required("required"),
@@ -30,10 +29,16 @@ const BookCab = ({ popup, setPopup, Images }) => {
   };
   const Data = [
     {
-      label: "Pickup location:",
-      name: "Source",
+      label: "Cab_id:",
+      name: "id",
       type: "text",
-      placeholder: "where should we pick you up from?",
+    },
+
+    {
+      label: "pickup location:",
+      name: "destination",
+      type: "text",
+      placeholder: "where should we drop you off?",
     },
     {
       label: "dropoff location:",
@@ -41,13 +46,29 @@ const BookCab = ({ popup, setPopup, Images }) => {
       type: "text",
       placeholder: "where should we drop you off?",
     },
+    {
+      label: "unitprice:",
+      name: "priceperkm",
+      type: "text",
+      value: 10,
+      readOnly: true,
+    },
+    {
+      label: "total fare:",
+      name: "total fare",
+      type: "text",
+      // value: totalFare(),
+    },
   ];
+  //calculating total fare of cab
+
+  const totalFare = () => {};
 
   return (
     <div className="relative">
       <div
-        className="absolute top-64 left-64
-      border-2 border-primary bg-slate-2 w-[40%] h-fit block  z-10 bg-white"
+        className="
+      border-2 border-primary bg-slate-2 w-96 h-fit block  z-10 bg-white"
       >
         <h2 className="py-4 px-4 font-bold text-2xl text-center border-b-2 border-primary">
           Book Cab
@@ -76,8 +97,10 @@ const BookCab = ({ popup, setPopup, Images }) => {
                             <Field
                               type={val.type}
                               name={val.name}
+                              value={val.value}
                               placeholder={val.placeholder}
                               className="border outline-none rounded-md px-4 py-2 w-full"
+                              readOnly={val.readOnly || false}
                             />
                             <ErrorMessage
                               name={val.name}

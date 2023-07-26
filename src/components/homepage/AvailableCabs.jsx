@@ -73,17 +73,17 @@ const AvailableCabs = () => {
     <div className="relative">
       {popup && (
         <div
-          className={` fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-80 z-40 ${
+          className={` fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-80 z-40 ${
             popup
               ? " transition-all duration-500 delay-100 transition-smooth"
-              : "ease-in-out duration-500 delay-100 ml-80"
+              : "ease-in-out duration-500 delay-100 ml-96"
           }`}
         >
           <BookCab popup={popup} setPopup={setPopup} Images={Images} />
         </div>
       )}
 
-      <div className="border-t-2 rounded-lg absolute top-6 left-20 right-6 border-purple-400 shadow-lg shadow-primary w-[80%] bg-slate-100 ">
+      <div className="  bg-slate-100 ">
         <div className="container  border-b-2 border-primary flex justify-center gap-24">
           <img src={logo} alt="logos" height={70} width={70} />
           <h2 className="block text-2xl font-bold py-4">Available Cabs</h2>
@@ -131,13 +131,13 @@ const AvailableCabs = () => {
           )
         ) : (
           <div>
-            <div
-              className="py-5 px-5 grid grid-cols-3 gap-4 mx-auto cursor-pointer"
-              onClick={handlePopup}
-            >
+            <div className="py-5 px-5 grid grid-cols-3 gap-4 justify-items-center cursor-pointer">
               {Images.map((val, i) => (
                 <div key={i}>
-                  <div className="border w-64 rounded-lg  capitalize">
+                  <div
+                    className="border w-64 rounded-lg  capitalize"
+                    onClick={handlePopup}
+                  >
                     <img
                       src={val.image}
                       alt="alt"
