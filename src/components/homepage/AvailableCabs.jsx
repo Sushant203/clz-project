@@ -27,44 +27,6 @@ const AvailableCabs = () => {
   const handlePopup = () => {
     setPopup(true);
   };
-  const Images = [
-    {
-      image: logo,
-      car: "suzuki",
-      seater: "5 seater",
-      model: "maruti S22",
-    },
-    {
-      image: cab1,
-      car: "Hyundai",
-      seater: "2 seater",
-      model: "chevlon F1622",
-    },
-    {
-      image: cab2,
-      car: "Scorpio",
-      seater: "6 seater",
-      model: "galaxy-777",
-    },
-    {
-      image: logo,
-      car: "suzuki",
-      seater: "5 seater",
-      model: "maruti S22",
-    },
-    {
-      image: cab1,
-      car: "Hyundai",
-      seater: "2 seater",
-      model: "chevlon F1622",
-    },
-    {
-      image: cab2,
-      car: "Scorpio",
-      seater: "6 seater",
-      model: "galaxy-777",
-    },
-  ];
 
   const [searchText, setSearchText] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
@@ -93,7 +55,7 @@ const AvailableCabs = () => {
               : "ease-in-out duration-500 delay-100 ml-96"
           }`}
         >
-          <BookCab popup={popup} setPopup={setPopup} Images={Images} />
+          <BookCab popup={popup} setPopup={setPopup} />
         </div>
       )}
 
