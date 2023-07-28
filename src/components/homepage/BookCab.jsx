@@ -11,7 +11,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
   const [km, setKm] = useState(0);
   const [totalKm, setTotalKm] = useState(0); // Added the state for total KM
   const [unitPrice, setUnitPrice] = useState(50);
-
+  const [locationid, setLocationId] = useState(0);
   const handleNextButtonClick = () => {
     setShowPreview(true);
   };
@@ -22,25 +22,25 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     // Make the Axios POST request
-    axios
-      .post("http://localhost:8000/book", { ...values, km })
-      .then((response) => {
-        // Handle successful response
-        console.log(response.data);
-        resetForm();
-        // setPopup(false);
-        console.log(handleSubmit);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error(error);
-      });
+    // axios
+    //   .post("http://localhost:8000/book", { ...values, km })
+    //   .then((response) => {
+    //     // Handle successful response
+    //     console.log(response.data);
+    //     resetForm();
+    //     // setPopup(false);
+    //     console.log(handleSubmit);
+    //   })
+    //   .catch((error) => {
+    //     // Handle error
+    //     console.error(error);
+    //   });
   };
 
   const Data = [
     {
-      label: "Source_destination:",
-      name: "Source",
+      label: "source_destination:",
+      name: "source_destination",
       as: "select",
       options: "choose source and destination",
       locationData: [],
@@ -54,7 +54,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
     },
     {
       label: "Total KM:", // New field for total KM
-      name: "totalKm",
+      name: "km",
       type: "text",
       value: totalKm,
       readOnly: true,
@@ -76,16 +76,37 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
     getLocationData();
   }, [getLocationData]);
 
+  // const handleSourceDestinationChange = (e) => {
+  //   const selectedLocation = locationData.find(
+  //     (location) => location.value === e.target.value
+  //   );
+  //   console.log(locationData.find(
+  //     (location) => location.value === e.target.value
+  //   ), "nej3jeujubh")
+  //   if (selectedLocation) {
+  //     setSelectedSourceDestination(selectedLocation.source_destination);
+  //     setKm(selectedLocation.km);
+  //     setTotalKm(selectedLocation.km); // Set the total KM based on the selected location's km
+  //   }
+  // };
   const handleSourceDestinationChange = (e) => {
     const selectedLocation = locationData.find(
-      (location) => location.value === e.target.value
+      (location) => location.source_destination === e.target.value
     );
-
+    // const selectedLocations = locationData.find(
+    //   (location) => location.km === e.target.value
+    // )
     if (selectedLocation) {
       setSelectedSourceDestination(selectedLocation.source_destination);
       setKm(selectedLocation.km);
-      setTotalKm(selectedLocation.km); // Set the total KM based on the selected location's km
+      setTotalKm(selectedLocation.km);
+      setLocationId(selectedLocation.id);
+      console.log(selectedLocation.id, "id of loction")
     }
+    // if (selectedLocations) {
+    //   setSelectedSourceDestination(selectedLocation.km);
+    //   setSelectedSourceDestination(selectedLocation.totalKm)
+    // }
   };
 
   const locationDataa = [
@@ -109,8 +130,10 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
             setShowPreview={setShowPreview}
             selectedCab={selectedCab}
             selectedSourceDestination={selectedSourceDestination}
-            distance={km}
+            km={km}
+            totalKm={totalKm}
             unitPrice={unitPrice}
+            locationid={locationid}
           />
         </div>
       )}
@@ -121,8 +144,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
         <div>
           <Formik
             initialValues={{
-              Source: "",
-              destination: "",
+              source_destination: ""
             }}
             onSubmit={handleSubmit}
           >
@@ -136,8 +158,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                           <div key={i}>
                             <div>
                               <label
-                                htmlFor={val.label}
-                                className="capitalize font-semibold"
+                                htmlFor={val.name}
                               >
                                 {val.label}
                               </label>

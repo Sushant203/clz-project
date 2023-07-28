@@ -98,6 +98,10 @@ const AvailableCabs = () => {
                       </h2>
                       <p className="text-slate-600">Capacity: {val.capacity}</p>
                       <p className="text-slate-600">model: {val.model}</p>
+                      <p className="text-slate-600">
+                        Status:{" "}
+                        {val.status === 1 ? "Available" : "Not Available"}
+                      </p>
                       <button
                         className="border rounded-md px-4 bg-primary py-2 text-white"
                         onClick={() => handlePopup(val)}
