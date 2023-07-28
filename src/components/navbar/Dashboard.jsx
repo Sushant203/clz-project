@@ -1,93 +1,120 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { AiFillDelete } from "react-icons/ai";
+import { FaEye } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
-  const [Data, setData] = useState([]);
+  const [datas, setDatas] = useState([]);
+  const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products/1") // Replace with your API endpoint URL
-      .then((response) => {
-        setData([response.data]);
-        console.log(response.data); // Handle successful response
-      })
-      .catch((error) => {
-        console.error(error); // Handle error
-      });
+  const fetchData = useCallback(() => {
+    try {
+      axios
+        .get("http://localhost:8000/book")
+        .then((res) => {
+          setDatas(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
-  const TableFields = [
-    {
-      title: "S.N",
-      label: "S.N",
-    },
-    {
-      title: "Date Booked",
-      label: "Date Booked",
-    },
-    {
-      title: "Driver Name",
-      label: "Driver Name",
-    },
-    {
-      title: "Details",
-      label: "Details",
-    },
-    {
-      title: "Status",
-      label: "Status",
-    },
-    {
-      title: "Action",
-      label: "Action",
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, toggle]);
+
+  const handleDelete = (id) => {
+    try {
+      axios
+        .delete(`http://localhost:8000/book/${id}`)
+        .then((res) => {
+          console.log(res.data);
+
+          setToggle(!toggle);
+          if (res.status === 200) {
+            toast.success("Bookings records Deleted Successfully!");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Cannot Delete Cab Record!");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getStatusLabel = (statuss) => {
+    return statuss === 0 ? (
+      <span className="px-4 py-1 text-xs rounded-full bg-gray-500 text-white font-bold">
+        pending...
+      </span>
+    ) : (
+      <span className="px-4 py-1 text-xs rounded-full bg-green-500 text-white">
+        Approved
+      </span>
+    );
+  };
 
   return (
-    <div>
-      <div className="">
-        <table className="border-2 w-full" cellPadding={6}>
-          <thead className=" bg-slate-300">
-            <tr className=" ">
-              {TableFields.map((val, i) => {
-                return (
-                  <th key={i} className="border">
-                    {val.title}
-                  </th>
-                );
-              })}
+    <div className="w-full overflow-x-auto">
+      <h1>List of Bookings</h1>
+      <table className="w-full">
+        <thead className="bg-blue-500 text-white">
+          <tr>
+            <th className="px-6 py-3">Booking ID</th>
+            <th className="px-6 py-3">Booked by</th>
+            <th className="hidden sm:table-cell px-6 py-3">Selected Cab</th>
+            <th className="hidden sm:table-cell px-6 py-3">Driver's Name</th>
+            <th className="hidden md:table-cell px-6 py-3">Date Booked</th>
+            <th className="px-6 py-3 hidden sm:table-cell">Status</th>
+            <th className="px-6 py-3 text-right pr-12 sm:pr-6">Action</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {datas.map((val, i) => (
+            <tr key={i} className={i % 2 === 0 ? "bg-blue-100" : "bg-blue-50"}>
+              <td className="px-6 py-4">{val.id}</td>
+              <td className="px-6 py-4">
+                {val.firstname} {val.middlename} {val.lastname}
+              </td>
+              <td className="hidden sm:table-cell px-6 py-4">{val.name}</td>
+              <td className="hidden sm:table-cell px-6 py-4">{val.dname}</td>
+              <td className="hidden md:table-cell px-6 py-4">
+                {val.booked_at}
+              </td>
+              <td className="px-6 py-4  sm:flex-row  sm:justify-start hidden sm:table-cell">
+                {getStatusLabel(val.statuss)}
+              </td>
+              <td className="px-6 py-4">
+                <div className="flex items-center gap-2 justify-start sm:justify-end">
+                  <div
+                    className="cursor-pointer text-red-700"
+                    onClick={() => {
+                      handleDelete(val.id);
+                    }}
+                  >
+                    <AiFillDelete />
+                  </div>
+
+                  <div className="cursor-pointer text-green-700">
+                    <Link to={`/singlebooking/${val.id}`}>
+                      <FaEye />
+                    </Link>
+                  </div>
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody className="">
-            {Data.map((item, index) => {
-              console.log(item);
-              return (
-                <tr key={index} className="">
-                  <td>{item.id}</td>
-                  <td>{item.title}</td>
-                  <td>{item.description}</td>
-                  <td>1</td>
-                  <td>2023-7/5</td>
-                  <td>sushant</td>
-                  <td>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Ab, est! Id eligendi possimus aliquid voluptatum voluptatem
-                    magnam doloribus fugiat corporis! Exercitationem, quia.{" "}
-                  </td>
-                </tr>
-              );
-            })}
-            {/* <tr>
-              <td>1</td>
-              <td>nj</td>
-              <td>xdb</td>
-              <td>sfg</td>
-              <td>sf</td>
-            </tr> */}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
+      <ToastContainer />
     </div>
   );
 };

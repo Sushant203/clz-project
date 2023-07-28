@@ -16,7 +16,7 @@ const Layout = () => {
         {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <div>
             <Navbar />
-            <div className="min-h-screen">
+            <div className="min-h-screen ">
               <Outlet />
             </div>
             <Footer />

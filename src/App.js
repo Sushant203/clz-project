@@ -9,6 +9,7 @@ import Signup from "./components/login/Signup";
 import Dashboard from "./components/navbar/Dashboard";
 import Login from "./components/login/Login";
 import "react-toastify/dist/ReactToastify.css";
+import Previewbooking from "./components/homepage/Previewbooking";
 function App() {
   return (
     <div>
@@ -22,6 +23,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/previewbooking" element={<Previewbooking />} />
           </Route>
         </Routes>
       </Router>

@@ -48,8 +48,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (event) => {
     setIsOpen(!isOpen);
+    event.stopPropagation();
   };
 
   //logout
