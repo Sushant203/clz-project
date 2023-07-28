@@ -1,61 +1,59 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React from "react";
 
-const Previewbooking = (props) => {
-  const [previewData, setPreviewData] = useState([]);
-  const [previous, setPrevious] = useState(false);
-  const { Source_destination, unitprice } = props;
-  // const cabId = localStorage.getItem("id");
-  // console.log("id:" + cabId);
-  const getPreviewData = useCallback(() => {
-    try {
-      axios.get(`http://localhost:8000/cab`).then((res) => {
-        setPreviewData(res.data);
-        console.log(res.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    getPreviewData();
-  }, [getPreviewData]);
-
-  const handlePrevious = () => {
-    setPrevious(true);
-  };
+const Previewbooking = ({
+  showPreview,
+  setShowPreview,
+  selectedCab,
+  selectedSourceDestination,
+  km,
+  unitPrice,
+}) => {
+  // Calculate total fare
+  const totalFare = km * unitPrice;
 
   return (
     <>
-      <div className="bg-slate-300 w-full h-full">
-        <h1 className="font-bold text-primary">Preview Your Booking</h1>
-
-        <Formik
-          initialValues={{}}
-          onSubmit={(values) => {
-            console.log("Form submitted:", values);
-          }}
-        >
-          <Form className="bg-red-300">
-            {previewData.map((val, i) => (
-              <div key={i}>
-                <p>Selected Cab: {val.name}</p>
-                <p>Driver Name: {val.dname}</p>
-                <p>Distance: {val.km}</p>
-                <p>unit price: {unitprice}</p>
-                <p>location: {Source_destination}</p>
-                <hr />
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="bg-red-200 h-fit border-2 border-primary p-8 w-full max-w-md">
+          <h1 className="font-bold text-primary text-2xl mb-4">
+            Preview Your Booking
+          </h1>
+          {selectedCab && (
+            <div className="mb-4">
+              <div className="">
+                <img
+                  src={`http://localhost:8000/${selectedCab.image}`}
+                  alt="imag"
+                  className="mx-auto p-3 border border-primary h-36 w-36"
+                />
               </div>
-            ))}
-            <button type="submit" onClick={handlePrevious}>
+              <p className="text-lg">Selected Cab: {selectedCab.name}</p>
+              <p className="text-lg">Driver Name: {selectedCab.dname}</p>
+              <p className="text-lg">
+                Status:{" "}
+                {selectedCab.status === 1 ? "Available" : "Not Available"}
+              </p>
+              <p className="text-lg">Km: {km} km</p>
+              <p className="text-lg">Total Fare: Rs. {totalFare}</p>
+              {/* Add more fields as per your cab data */}
+            </div>
+          )}
+          <div className="flex flex-col sm:flex-row justify-center">
+            <button
+              type="button"
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0 sm:mr-2"
+              onClick={() => setShowPreview(false)}
+            >
               Back
             </button>
-            <button type="submit">Submit</button>
-          </Form>
-        </Formik>
+            <button
+              type="submit"
+              className="bg-green-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

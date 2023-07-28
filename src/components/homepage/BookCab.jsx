@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Field, Form, ErrorMessage, Formik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Previewbooking from "./Previewbooking";
 
-const schema = yup.object().shape({
-  Source: yup.string().required("required"),
-  destination: yup.string().required("required"),
-});
-const BookCab = ({ popup, setPopup, props }) => {
+const BookCab = ({ popup, setPopup, selectedCab }) => {
   const [locationData, setlocationData] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [selectedSourceDestination, setSelectedSourceDestination] =
+    useState("");
+  const [km, setKm] = useState(0);
+  const [totalKm, setTotalKm] = useState(0); // Added the state for total KM
+  const [unitPrice, setUnitPrice] = useState(50);
 
   const handleNextButtonClick = () => {
     setShowPreview(true);
@@ -24,7 +23,7 @@ const BookCab = ({ popup, setPopup, props }) => {
   const handleSubmit = (values, { resetForm }) => {
     // Make the Axios POST request
     axios
-      .post("http://localhost:8000/book", values)
+      .post("http://localhost:8000/book", { ...values, km })
       .then((response) => {
         // Handle successful response
         console.log(response.data);
@@ -37,26 +36,31 @@ const BookCab = ({ popup, setPopup, props }) => {
         console.error(error);
       });
   };
+
   const Data = [
     {
       label: "Source_destination:",
-      name: "Source_destination",
+      name: "Source",
       as: "select",
-      // placeholder: "choose source and destination ",
       options: "choose source and destination",
       locationData: [],
     },
-
     {
-      label: "unitprice:",
+      label: "price per KM:",
       name: "unitprice",
       type: "text",
-      value: 10,
+      value: `Rs. ${unitPrice}`,
+      readOnly: true,
+    },
+    {
+      label: "Total KM:", // New field for total KM
+      name: "totalKm",
+      type: "text",
+      value: totalKm,
       readOnly: true,
     },
   ];
 
-  //data for source-destination field
   const getLocationData = useCallback(() => {
     try {
       axios.get("http://localhost:8000/location").then((res) => {
@@ -72,6 +76,18 @@ const BookCab = ({ popup, setPopup, props }) => {
     getLocationData();
   }, [getLocationData]);
 
+  const handleSourceDestinationChange = (e) => {
+    const selectedLocation = locationData.find(
+      (location) => location.value === e.target.value
+    );
+
+    if (selectedLocation) {
+      setSelectedSourceDestination(selectedLocation.source_destination);
+      setKm(selectedLocation.km);
+      setTotalKm(selectedLocation.km); // Set the total KM based on the selected location's km
+    }
+  };
+
   const locationDataa = [
     {
       id: "0",
@@ -79,30 +95,28 @@ const BookCab = ({ popup, setPopup, props }) => {
       readOnly: true,
     },
   ];
+
   Data[0].locationData.push(...locationDataa, ...locationData);
+
   return (
     <div className="relative">
-      {Previewbooking && (
+      {showPreview && (
         <div
-          className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-80 ${
-            Previewbooking
-              ? "hidden"
-              : "ease-in-out duration-200 delay-100 ml-48"
-          }`}
+          className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-80`}
         >
           <Previewbooking
             showPreview={showPreview}
             setShowPreview={setShowPreview}
+            selectedCab={selectedCab}
+            selectedSourceDestination={selectedSourceDestination}
+            distance={km}
+            unitPrice={unitPrice}
           />
         </div>
       )}
-      <div
-        className="
-      border-2 border-primary bg-slate-2 w-96 h-fit block  z-10 bg-white"
-      >
+      <div className="border-2 border-primary bg-slate-2 w-96 h-fit block  z-10 bg-white">
         <h2 className="py-4 px-4 font-bold text-2xl text-center border-b-2 border-primary">
           Book Cab
-          {/* <span>{Images ? Images.car : "No car information"}</span> */}
         </h2>
         <div>
           <Formik
@@ -110,7 +124,6 @@ const BookCab = ({ popup, setPopup, props }) => {
               Source: "",
               destination: "",
             }}
-            validationSchema={schema}
             onSubmit={handleSubmit}
           >
             {({ handleSubmit }) => {
@@ -122,7 +135,10 @@ const BookCab = ({ popup, setPopup, props }) => {
                         return (
                           <div key={i}>
                             <div>
-                              <label htmlFor={val.label} className="capitalize">
+                              <label
+                                htmlFor={val.label}
+                                className="capitalize font-semibold"
+                              >
                                 {val.label}
                               </label>
                               <Field
@@ -131,12 +147,15 @@ const BookCab = ({ popup, setPopup, props }) => {
                                 value={val.value}
                                 placeholder={val.placeholder}
                                 className="border outline-none rounded-md px-4 py-2 w-full"
+                                onChange={(e) =>
+                                  handleSourceDestinationChange(e)
+                                }
                               >
-                                <option disabled>{val.options}</option>
+                                <option readOnly={true}>{val.options}</option>
                                 {locationData.map((item, index) => {
                                   return (
                                     <option key={index} value={item.value}>
-                                      <li>{item.source_destination}</li>
+                                      {item.source_destination}
                                     </option>
                                   );
                                 })}
@@ -153,7 +172,10 @@ const BookCab = ({ popup, setPopup, props }) => {
                         return (
                           <div key={i}>
                             <div>
-                              <label htmlFor={val.label} className="capitalize">
+                              <label
+                                htmlFor={val.label}
+                                className="capitalize font-semibold"
+                              >
                                 {val.label}
                               </label>
                               <Field
@@ -177,14 +199,17 @@ const BookCab = ({ popup, setPopup, props }) => {
                   </div>
                   <div className="flex justify-end py-2 gap-3 px-4">
                     {showPreview ? (
-                      <Previewbooking
-                        Source_destination={Data[0].value}
-                        unitprice={Data[1].value}
-                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPreview(false)}
+                        className="px-4 py-1 border-none rounded-lg text-center bg-primary text-slate-50"
+                      >
+                        Previous
+                      </button>
                     ) : (
                       <button
+                        type="button"
                         onClick={handleNextButtonClick}
-                        type="submit"
                         className="px-4 py-1 border-none rounded-lg text-center bg-primary text-slate-50"
                       >
                         Next
