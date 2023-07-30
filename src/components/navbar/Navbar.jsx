@@ -63,12 +63,12 @@ const Navbar = () => {
 
   const handleDashboardClick = () => {
     setShowDashboard(true);
-    console.log("nsfvkkjsf");
+    // console.log("nsfvkkjsf");
   };
 
   return (
     <nav>
-      <div className="flex justify-around bg-primary text-white text-center w-full h-14 items-center capitalize">
+      <div className="flex justify-around bg-primary text-slate-200  text-center w-full h-14 items-center capitalize">
         <div>
           <img src={logo} alt="logo" className="h-16 w-18 " />
         </div>
@@ -77,7 +77,10 @@ const Navbar = () => {
           <div className="flex justify-evenly gap-3">
             {NavItems.map((val, i) => {
               return (
-                <div key={i} className="">
+                <div
+                  key={i}
+                  className="border-2 border-primary hover:border-t-0 hover:border-l-0 hover: border-r-0 hover:border-b-2 hover:border-third"
+                >
                   <Link to={val.path}>{val.name}</Link>
                 </div>
               );

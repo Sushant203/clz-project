@@ -1,49 +1,168 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { Form, Formik, Field, ErrorMessage } from "formik";
+import axios from "axios";
+import * as yup from "yup";
+import {
+  AiOutlinePhone,
+  AiOutlineMail,
+  AiOutlineFacebook,
+  AiOutlineInstagram,
+} from "react-icons/ai";
+// yup validation
+const schema = yup.object().shape({
+  fullname: yup.string().required("Fullname is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  phone: yup.string().required("Phone is required"),
+  message: yup.string().required("Message is required"),
+});
 const Contact = () => {
+  const contactMethods = [
+    {
+      icon: <AiOutlinePhone className="text-4xl rounded-md  bg-[#10a310]" />,
+      name: "phone",
+      href: "tel:977-9802153267",
+    },
+    {
+      icon: <AiOutlineMail className="text-4xl rounded-md bg-[#366adb]" />,
+      name: "email",
+      href: "mailto:shrestha.krisna99@gmail.com",
+    },
+    {
+      icon: <AiOutlineFacebook className="text-4xl rounded-md bg-[#1777F2]" />,
+      name: "Facebook",
+      href: "https://www.facebook.com/himal.fullel",
+      target: "_blank",
+    },
+    {
+      icon: (
+        <AiOutlineInstagram className="text-4xl rounded-md bg-gradient-to-tr from-[#FEDA77] via-[#DB171B] via-[#A9128C] via-[#A14BCA] to-[#6248CD] " />
+      ),
+      name: "Instagram",
+      href: "https://www.instagram.com/sushant.stha22/",
+      target: "_blank",
+    },
+  ];
+
+  //contact form data
+  const formData = [
+    {
+      label: "Fullname:",
+      name: "fullname",
+      type: "text",
+    },
+    {
+      label: "Email:",
+      name: "email",
+      type: "email",
+    },
+    {
+      label: "Phone:",
+      name: "phone",
+      type: "text",
+    },
+    {
+      label: "Message:",
+      name: "message",
+      type: "textarea",
+    },
+  ];
+
+  const postFormData = (values) => {
+    try {
+      axios.post("http://localhost:8000/contact", values).then((res) => {
+        if (res.status === 200) {
+          console.log("data posted successfully");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   return (
-    <div>
-      <div className="border-t-2 rounded-lg  p-4 w-[80%] border-primary mx-32 my-10">
-        <h1 className="text-2xl text-primary font-bold text-center border-b-2 border-primary">
+    <div className="bg-slate-200 min-h-screen flex flex-col">
+      <div className="border-t-2 rounded-sm p-4 border-primary mx-32 my-10">
+        <h1 className="text-4xl text-primary font-bold text-center border-b-2 border-primary">
           Contact Us from here
         </h1>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore
-          consectetur cupiditate quaerat, sint consequatur, molestias ut rem vel
-          in non possimus nobis est laudantium. Eum, quisquam sed? Ut,
-          voluptates explicabo. Assumenda, officia hic? Totam consequatur quidem
-          nobis iusto doloribus officiis neque sunt odit ipsum, id hic ea,
-          consequuntur fuga non molestias. Explicabo doloribus praesentium sed
-          pariatur, hic voluptate amet quam. Iusto, quidem eius! Asperiores
-          minus tempora magnam eum officia autem recusandae deleniti sequi enim
-          aliquam, quae, inventore incidunt sit vitae debitis, distinctio sint?
-          Nihil corrupti quod architecto libero sequi deleniti? Laudantium
-          voluptatum deleniti iste voluptas suscipit veniam non eligendi dolorem
-          itaque similique modi nemo animi, beatae inventore hic. Pariatur
-          blanditiis consectetur distinctio numquam dolore laboriosam libero
-          iusto quod voluptatem voluptate! Consectetur quas inventore quisquam
-          fugit quidem nemo fugiat autem, at odio commodi, accusamus
-          praesentium, facilis magnam. Dolorem hic odio eveniet doloribus cum
-          animi architecto rerum voluptas, necessitatibus quis nobis ullam? Et
-          placeat, est nihil esse assumenda id maiores quam consequuntur, velit
-          nemo ipsa sit. Ipsum, corporis aperiam natus, nostrum nemo facere
-          dolores doloribus esse non obcaecati fugit itaque porro temporibus!
-          Asperiores eum quod consectetur facere corrupti mollitia doloribus
-          quaerat ipsum esse enim atque fuga temporibus nihil in voluptatem
-          laboriosam, non dignissimos suscipit tenetur eos praesentium nemo
-          quas! Qui, rem enim! Porro nam temporibus, illum est delectus
-          architecto assumenda animi odio consequatur minima possimus fugit.
-          Debitis iste optio cupiditate aspernatur quasi dolores illum sunt
-          blanditiis necessitatibus reprehenderit ipsam fugiat, consequuntur
-          saepe? Rerum perspiciatis, debitis natus et molestiae ipsam voluptate
-          animi, pariatur voluptates dignissimos dolore sequi recusandae.
-          Expedita exercitationem ratione repellat amet ad, minima, doloribus,
-          enim dolor distinctio dolore quidem nemo sed! Amet minima, saepe
-          quibusdam molestias excepturi doloribus. Temporibus, officia
-          consectetur doloribus quisquam pariatur at in soluta saepe dolorem qui
-          eaque excepturi velit iusto. Officiis possimus vitae ut molestiae
-          laudantium iure!
-        </p>
+      </div>
+      {/* Icon plotting */}
+      <div className="fixed right-0 border-2 shadow-primary shadow-lg w-16 rounded-md bg-slate-200 overflow-hidden">
+        {contactMethods.map((val, i) => (
+          <a
+            key={i}
+            href={val.href}
+            target={val.target}
+            className={`py-1 flex items-center gap-1 ${
+              hoveredIndex === i ? "bg-white" : ""
+            }`}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <p className="cursor-pointer">{val.icon}</p>
+          </a>
+        ))}
+      </div>
+      {/* Contact form */}
+      <div className="flex-grow">
+        <Formik
+          initialValues={{
+            fullname: "",
+            email: "",
+            phone: "",
+            message: "",
+          }}
+          validationSchema={schema}
+          onSubmit={(values, { resetForm }) => {
+            postFormData(values);
+            resetForm();
+          }}
+        >
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
+              <div className="py-2">
+                <h2 className="font-bold text-2xl leading-10">
+                  Send a Quick Message
+                </h2>
+                <p className="text-sm">
+                  You can give us your suggestions & feedback as per the address
+                  below by post, by phone, or send us using the attached online
+                  form.
+                </p>
+              </div>
+              {formData.map((item, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-1 items-center justify-center gap-2 py-2"
+                >
+                  <label htmlFor={item.name} className="text-justify">
+                    {item.label}
+                  </label>
+                  <Field
+                    type={item.type}
+                    name={item.name}
+                    className="border rounded-md py-2"
+                  />
+                  <ErrorMessage
+                    name={item.name}
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+              ))}
+              <div className="w-full text-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-md mt-4 text-white bg-primary"
+                >
+                  Submit
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

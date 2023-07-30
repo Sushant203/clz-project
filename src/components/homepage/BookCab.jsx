@@ -100,8 +100,8 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
       setSelectedSourceDestination(selectedLocation.source_destination);
       setKm(selectedLocation.km);
       setTotalKm(selectedLocation.km);
-      setLocationId(selectedLocation.lid);
-      console.log(selectedLocation.lid, "id of loction")
+      setLocationId(selectedLocation.id);
+      console.log(selectedLocation.id, "id of loction");
     }
     // if (selectedLocations) {
     //   setSelectedSourceDestination(selectedLocation.km);
@@ -137,28 +137,29 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
           />
         </div>
       )}
-      <div className="border-2 border-primary bg-slate-2 w-96 h-fit block  z-10 bg-white">
+      <div className="border border-none rounded-md py-2 px-2 bg-slate-2 w-96 h-fit block  z-10   bg-slate-300">
         <h2 className="py-4 px-4 font-bold text-2xl text-center border-b-2 border-primary">
           Book Cab
         </h2>
         <div>
           <Formik
             initialValues={{
-              source_destination: ""
+              source_destination: "",
             }}
             onSubmit={handleSubmit}
           >
             {({ handleSubmit }) => {
               return (
                 <Form onSubmit={handleSubmit}>
-                  <div className="py-2 px-4">
+                  <div className="py-4 px-4">
                     {Data.map((val, i) => {
                       if (val.as === "select") {
                         return (
                           <div key={i}>
-                            <div>
+                            <div className="py-2">
                               <label
                                 htmlFor={val.name}
+                                className="font-medium capitalize  "
                               >
                                 {val.label}
                               </label>
@@ -167,7 +168,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                                 name={val.name}
                                 value={val.value}
                                 placeholder={val.placeholder}
-                                className="border outline-none rounded-md px-4 py-2 w-full"
+                                className="border outline-none rounded-md px-4 py-2 w-full "
                                 onChange={(e) =>
                                   handleSourceDestinationChange(e)
                                 }
@@ -175,7 +176,11 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                                 <option readOnly={true}>{val.options}</option>
                                 {locationData.map((item, index) => {
                                   return (
-                                    <option key={index} value={item.value}>
+                                    <option
+                                      key={index}
+                                      value={item.value}
+                                      className="text-slate-200 bg-primary"
+                                    >
                                       {item.source_destination}
                                     </option>
                                   );
@@ -195,7 +200,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                             <div>
                               <label
                                 htmlFor={val.label}
-                                className="capitalize font-semibold"
+                                className="capitalize font-medium"
                               >
                                 {val.label}
                               </label>
