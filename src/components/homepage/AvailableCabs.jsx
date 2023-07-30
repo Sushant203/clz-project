@@ -44,9 +44,20 @@ const AvailableCabs = () => {
     );
     setFilteredItems(filtered);
   };
+  const getStatusLabel = (status) => {
+    return status === 0 ? (
+      <span className="px-3 py-1 text-xs rounded-full bg-red-500 text-white">
+        Not Available
+      </span>
+    ) : (
+      <span className="px-3 py-1 text-xs rounded-full bg-green-500 text-white">
+        Available
+      </span>
+    );
+  };
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-screen ">
       {popup && (
         <div
           className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-80 z-40`}
@@ -59,7 +70,7 @@ const AvailableCabs = () => {
         </div>
       )}
 
-      <div className="bg-slate-100 h-full">
+      <div className="">
         <div className="container border-b-2 border-primary flex justify-center gap-24">
           <img src={logo} alt="logos" height={70} width={70} />
           <h2 className="block text-2xl font-bold py-4">Available Cabs</h2>
@@ -98,10 +109,7 @@ const AvailableCabs = () => {
                       </h2>
                       <p className="text-slate-600">Capacity: {val.capacity}</p>
                       <p className="text-slate-600">model: {val.model}</p>
-                      <p className="text-slate-600">
-                        Status:{" "}
-                        {val.status === 1 ? "Available" : "Not Available"}
-                      </p>
+                      <p>Status:{getStatusLabel(val.status)}</p>
                       <button
                         className="border rounded-md px-4 bg-primary py-2 text-white"
                         onClick={() => handlePopup(val)}
@@ -122,7 +130,7 @@ const AvailableCabs = () => {
               {Cabs.map((val, i) => (
                 <div key={i}>
                   <div
-                    className="border w-64 rounded-lg capitalize pb-4"
+                    className="border w-64 rounded-lg capitalize pb-4 hover:translate-y-0.5 "
                     onClick={() => handlePopup(val)}
                   >
                     <img
@@ -130,7 +138,7 @@ const AvailableCabs = () => {
                       alt="alt"
                       className="w-full h-36 border-b-2 border-primary rounded-tr-lg rounded-tl-lg"
                     />
-                    <div className="px-3 text-slate-700">
+                    <div className="px-3 py-1 text-slate-600">
                       <h2 className="pt-4 capitalize">
                         <span className="font-bold">Cabname</span>: {val.name}
                       </h2>
@@ -141,7 +149,11 @@ const AvailableCabs = () => {
                       <p>
                         <span className="font-bold">Model</span>: {val.model}
                       </p>
-                      <button className="border rounded-md px-4 bg-primary py-2 text-white">
+                      <p>
+                        <span className="font-bold">Status:</span>
+                        {getStatusLabel(val.status)}
+                      </p>
+                      <button className="border rounded-md px-4 mt-2 bg-primary py-2 text-white">
                         Book Now
                       </button>
                     </div>

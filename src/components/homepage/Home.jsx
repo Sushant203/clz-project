@@ -85,7 +85,7 @@ const Home = () => {
                     </h2>
                     <p
                       className="description text-sm px-3 
-                  capitalize overflow-scroll"
+                  capitalize overflow-scroll text-slate-500"
                     >
                       {val.description}
                     </p>
