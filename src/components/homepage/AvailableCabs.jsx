@@ -44,6 +44,7 @@ const AvailableCabs = () => {
     );
     setFilteredItems(filtered);
   };
+
   const getStatusLabel = (status) => {
     return status === 0 ? (
       <span className="px-3 py-1 text-xs rounded-full bg-red-500 text-white">
@@ -57,7 +58,7 @@ const AvailableCabs = () => {
   };
 
   return (
-    <div className="relative h-screen ">
+    <div className="relative min-h-screen flex flex-col">
       {popup && (
         <div
           className={`fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-80 z-40`}
@@ -70,7 +71,7 @@ const AvailableCabs = () => {
         </div>
       )}
 
-      <div className="">
+      <div className="flex-grow">
         <div className="container border-b-2 border-primary flex justify-center gap-24">
           <img src={logo} alt="logos" height={70} width={70} />
           <h2 className="block text-2xl font-bold py-4">Available Cabs</h2>
@@ -95,24 +96,29 @@ const AvailableCabs = () => {
         {searchText !== "" ? (
           filteredItems.length > 0 ? (
             <div>
-              <div className="py-5 grid grid-cols-3 gap-4 ml-5">
+              <div className="py-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ml-5">
                 {filteredItems.map((val, i) => (
-                  <div key={i}>
-                    <div className="border w-64 rounded-lg px-3 capitalize">
+                  <div key={i} className="w-full">
+                    <div
+                      className={`border-2 rounded-lg p-3 capitalize flex flex-col items-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 border-purple-400 ${
+                        val.status === 0 ? "opacity-70 pointer-events-none" : ""
+                      }`}
+                    >
                       <img
-                        src={`http://localhost:8000/${val.image}`}
+                        src={`http://localhost:8000/${val.cimage}`}
                         alt="alt"
-                        className="w-full h-36  border-b-2 border-primary rounded-lg"
+                        className="w-full h-36 object-cover mb-4 rounded-md"
                       />
-                      <h2 className="py-2 capitalize font-bold">
+                      <h2 className="text-xl font-bold capitalize text-white">
                         Cab name: {val.name}
                       </h2>
-                      <p className="text-slate-600">Capacity: {val.capacity}</p>
-                      <p className="text-slate-600">model: {val.model}</p>
-                      <p>Status:{getStatusLabel(val.status)}</p>
+                      <p className="text-white">Capacity: {val.capacity}</p>
+                      <p className="text-white">Model: {val.model}</p>
+                      <p>Status: {getStatusLabel(val.status)}</p>
                       <button
-                        className="border rounded-md px-4 bg-primary py-2 text-white"
+                        className="border rounded-md px-4 mt-4 bg-white py-2 text-purple-600"
                         onClick={() => handlePopup(val)}
+                        disabled={val.status === 0}
                       >
                         Book Now
                       </button>
@@ -125,35 +131,40 @@ const AvailableCabs = () => {
             <p>No results found.</p>
           )
         ) : (
-          <div>
-            <div className="py-5 px-5 grid grid-cols-3 gap-4 justify-items-center cursor-pointer">
+          <div className="flex-grow">
+            <div className="py-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-items-center cursor-pointer">
               {Cabs.map((val, i) => (
-                <div key={i}>
+                <div key={i} className="w-full">
                   <div
-                    className="border w-64 rounded-lg capitalize pb-4 hover:translate-y-0.5 "
+                    className={`rounded-lg p-3 capitalize flex flex-col items-center bg-gray-100 border-2 hover:translate-y-0.5 ${
+                      val.status === 0 ? "opacity-70 pointer-events-none" : ""
+                    }`}
                     onClick={() => handlePopup(val)}
                   >
                     <img
-                      src={`http://localhost:8000/${val.image}`}
+                      src={`http://localhost:8000/${val.cimage}`}
                       alt="alt"
-                      className="w-full h-36 border-b-2 border-primary rounded-tr-lg rounded-tl-lg"
+                      className="w-full h-48 object-cover mb-4 rounded-md"
                     />
-                    <div className="px-3 py-1 text-slate-600">
-                      <h2 className="pt-4 capitalize">
-                        <span className="font-bold">Cabname</span>: {val.name}
+                    <div className="">
+                      <h2 className=" font-bold capitalize">
+                        <span className="font-bold">Cab Name:</span> {val.name}
                       </h2>
                       <p>
-                        <span className="font-bold">Capacity</span>:{" "}
+                        <span className="font-bold">Capacity:</span>{" "}
                         {val.capacity}
                       </p>
                       <p>
-                        <span className="font-bold">Model</span>: {val.model}
+                        <span className="font-bold">Model:</span> {val.model}
                       </p>
                       <p>
-                        <span className="font-bold">Status:</span>
+                        <span className="font-bold">Status:</span>{" "}
                         {getStatusLabel(val.status)}
                       </p>
-                      <button className="border rounded-md px-4 mt-2 bg-primary py-2 text-white">
+                      <button
+                        className="border rounded-md px-4 mt-4 bg-white py-2 text-blue-600"
+                        disabled={val.status === 0}
+                      >
                         Book Now
                       </button>
                     </div>

@@ -137,7 +137,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
           />
         </div>
       )}
-      <div className="border-2 border-primary bg-slate-2 w-96 h-fit block  z-10   bg-gradient-to-tr from-[#6190E8] to-[#A7BFE8]">
+      <div className="border border-none rounded-md py-2 px-2 bg-slate-2 w-96 h-fit block  z-10   bg-slate-300">
         <h2 className="py-4 px-4 font-bold text-2xl text-center border-b-2 border-primary">
           Book Cab
         </h2>

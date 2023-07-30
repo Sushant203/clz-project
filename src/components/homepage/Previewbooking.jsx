@@ -45,7 +45,7 @@ const Previewbooking = ({
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center mt-10">
-        <div className="bg-gradient-to-tr from-[#2980B9] to-[#6DD5FA] h-fit border-2 border-primary p-8 w-full max-w-md">
+        <div className="bg-gradient-to-tr from-[#2980B9] to-[#6DD5FA] h-fit border-2 border-primary p-8 w-[28rem]">
           <h1 className="font-bold text-primary text-center text-2xl mb-4">
             Booking Preview
           </h1>
@@ -54,9 +54,9 @@ const Previewbooking = ({
               {/* Display the selected cab information */}
               <div className="pb-4 ">
                 <img
-                  src={`http://localhost:8000/${selectedCab.image}`}
+                  src={`http://localhost:8000/${selectedCab.cimage}`}
                   alt="imag"
-                  className="mx-auto  border border-primary h-36 w-36 rounded-md "
+                  className="mx-auto  border border-primary h-48 w-full rounded-md "
                 />
               </div>
               <div className="px-4 py-3">
@@ -64,6 +64,11 @@ const Previewbooking = ({
                   <span className="font-semibold">Selected Cab</span>:{" "}
                   {selectedCab.name}
                 </p>
+                <p className="text-lg text">
+                  <span className="font-semibold">Cab number</span>:{" "}
+                  {selectedCab.cnumber}
+                </p>
+
                 <p className="text-lg">
                   Status:{" "}
                   {selectedCab.status === 1 ? "Available" : "Not Available"}
@@ -87,7 +92,7 @@ const Previewbooking = ({
                 <div className="flex flex-col sm:flex-row justify-center">
                   <button
                     type="button"
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0 sm:mr-2"
+                    className="bg-red-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0 sm:mr-2"
                     onClick={() => setShowPreview(false)}
                   >
                     Back

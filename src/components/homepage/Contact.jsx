@@ -8,8 +8,13 @@ import {
   AiOutlineFacebook,
   AiOutlineInstagram,
 } from "react-icons/ai";
-//yup validation
-const schema = yup.object().shape({});
+// yup validation
+const schema = yup.object().shape({
+  fullname: yup.string().required("Fullname is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  phone: yup.string().required("Phone is required"),
+  message: yup.string().required("Message is required"),
+});
 const Contact = () => {
   const contactMethods = [
     {
@@ -62,10 +67,9 @@ const Contact = () => {
     },
   ];
 
-  //posting form data
   const postFormData = (values) => {
     try {
-      axios.post("http://localhost:8000/contact").then((res) => {
+      axios.post("http://localhost:8000/contact", values).then((res) => {
         if (res.status === 200) {
           console.log("data posted successfully");
         }
@@ -74,34 +78,35 @@ const Contact = () => {
       console.log(error);
     }
   };
+
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
   return (
-    <div className="bg-slate-200 h-screen">
-      <div className="border-t-2 rounded-sm  p-4  border-primary mx-32 my-10">
+    <div className="bg-slate-200 min-h-screen flex flex-col">
+      <div className="border-t-2 rounded-sm p-4 border-primary mx-32 my-10">
         <h1 className="text-4xl text-primary font-bold text-center border-b-2 border-primary">
           Contact Us from here
         </h1>
       </div>
-      {/* icon plotting */}
-      <div>
-        <div className="fixed right-0 border-2 h-fit rounded-md bg-slate-200 overflow-hidden">
-          {contactMethods.map((val, i) => {
-            return (
-              <a
-                key={i}
-                href={val.href}
-                target={val.target}
-                className=" py-1 flex items-center gap-1"
-              >
-                <p className="cursor-pointer">{val.icon}</p>
-                {/* <p className=" capitalize">{val.name}</p> */}
-              </a>
-            );
-          })}
-        </div>
+      {/* Icon plotting */}
+      <div className="fixed right-0 border-2 shadow-primary shadow-lg w-16 rounded-md bg-slate-200 overflow-hidden">
+        {contactMethods.map((val, i) => (
+          <a
+            key={i}
+            href={val.href}
+            target={val.target}
+            className={`py-1 flex items-center gap-1 ${
+              hoveredIndex === i ? "bg-white" : ""
+            }`}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <p className="cursor-pointer">{val.icon}</p>
+          </a>
+        ))}
       </div>
-      {/* contact form */}
-      <div className="">
+      {/* Contact form */}
+      <div className="flex-grow">
         <Formik
           initialValues={{
             fullname: "",
@@ -110,52 +115,53 @@ const Contact = () => {
             message: "",
           }}
           validationSchema={schema}
-          onSubmit={(item, values, { resetForm }) => {
-            console.log(item);
+          onSubmit={(values, { resetForm }) => {
             postFormData(values);
             resetForm();
           }}
         >
-          <div className="w-8/12 mx-auto border-2 rounded-md border-primary p-4 ">
-            <Form>
-              <div className="py-2 ">
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
+              <div className="py-2">
                 <h2 className="font-bold text-2xl leading-10">
                   Send a Quick Message
                 </h2>
                 <p className="text-sm">
-                  You can give us your suggestions & feedbacks as per below
-                  address by post, by phone, or can send us using attached
-                  online form.
+                  You can give us your suggestions & feedback as per the address
+                  below by post, by phone, or send us using the attached online
+                  form.
                 </p>
               </div>
-              {formData.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className=" grid grid-cols-1 items-center justify-center gap-2 py-2 "
-                  >
-                    <label htmlFor={item.label} className="text-justify">
-                      {item.label}
-                    </label>
-                    <Field
-                      type={item.type}
-                      name={item.name}
-                      className="border  rounded-md py-2 "
-                    />
-                    {/* <ErrorMessage component={"div"} className="text-red-500" /> */}
-                  </div>
-                );
-              })}
-              <div>
+              {formData.map((item, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-1 items-center justify-center gap-2 py-2"
+                >
+                  <label htmlFor={item.name} className="text-justify">
+                    {item.label}
+                  </label>
+                  <Field
+                    type={item.type}
+                    name={item.name}
+                    className="border rounded-md py-2"
+                  />
+                  <ErrorMessage
+                    name={item.name}
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+              ))}
+              <div className="w-full text-center">
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-md mt-4 text-slate-50  bg-primary"
+                  className="px-4 py-2 rounded-md mt-4 text-white bg-primary"
                 >
                   Submit
                 </button>
               </div>
             </Form>
-          </div>
+          )}
         </Formik>
       </div>
     </div>
