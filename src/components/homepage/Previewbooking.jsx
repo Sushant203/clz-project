@@ -55,7 +55,7 @@ const Previewbooking = ({
               {/* Display the selected cab information */}
               <div className="">
                 <img
-                  src={`http://localhost:8000/${selectedCab.image}`}
+                  src={`http://localhost:8000/${selectedCab.cimage}`}
                   alt="imag"
                   className="mx-auto p-3 border border-primary h-36 w-36"
                 />

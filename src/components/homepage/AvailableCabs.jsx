@@ -89,7 +89,7 @@ const AvailableCabs = () => {
                   <div key={i}>
                     <div className="border w-64 rounded-lg px-3 capitalize">
                       <img
-                        src={`http://localhost:8000/${val.image}`}
+                        src={`http://localhost:8000/${val.cimage}`}
                         alt="alt"
                         className="w-full h-36  border-b-2 border-primary rounded-lg"
                       />
@@ -126,7 +126,7 @@ const AvailableCabs = () => {
                     onClick={() => handlePopup(val)}
                   >
                     <img
-                      src={`http://localhost:8000/${val.image}`}
+                      src={`http://localhost:8000/${val.cimage}`}
                       alt="alt"
                       className="w-full h-36 border-b-2 border-primary rounded-tr-lg rounded-tl-lg"
                     />
