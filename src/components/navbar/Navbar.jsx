@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from "react";
-// import { CgDrop, CgMenu, CgProfile, CgSidebarOpen } from "react-icons/cg";
+import React, { useState, useEffect, useRef } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import logo from "../resources/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+const useOutsideClick = (ref, callback) => {
+  const handleClick = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      callback();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  });
+};
 
 const Navbar = () => {
   const [Users, setUsers] = useState([]);
@@ -47,11 +61,18 @@ const Navbar = () => {
   // profile logout and setting dropdown logic
   const [isOpen, setIsOpen] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const profileRef = useRef();
 
   const toggleDropdown = (event) => {
     setIsOpen(!isOpen);
     event.stopPropagation();
   };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  useOutsideClick(profileRef, closeDropdown);
 
   //logout
   const handleLogout = () => {
@@ -59,11 +80,10 @@ const Navbar = () => {
     navigate("/login");
   };
   //setting
-  const handleSettings = () => {};
+  const handleSettings = () => { };
 
   const handleDashboardClick = () => {
     setShowDashboard(true);
-    // console.log("nsfvkkjsf");
   };
 
   return (
@@ -91,7 +111,7 @@ const Navbar = () => {
         <h3>
           {Users.map((val, i) => {
             return (
-              <div key={i} className="flex gap-2 items-center">
+              <div key={i} className="flex gap-2 items-center" ref={profileRef}>
                 <div>
                   <img
                     src={`http://localhost:8000/${val.image}`}
@@ -122,9 +142,11 @@ const Navbar = () => {
                 Logout
               </button>
               {/* settings */}
-              <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
-                Setting
-              </div>
+              <Link to="/setting">
+                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+                  Setting
+                </div>
+              </Link>
               <Link to="/dashboard">
                 <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
                   Dashboard

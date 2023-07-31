@@ -1,19 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineVerticalRight } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
+  const userid = localStorage.getItem("user_id");
   const [datas, setDatas] = useState([]);
   const [toggle, setToggle] = useState(false);
 
   const fetchData = useCallback(() => {
     try {
       axios
-        .get("http://localhost:8000/book")
+        .get(`http://localhost:8000/book/user/${userid}`)
         .then((res) => {
           setDatas(res.data);
         })
@@ -38,7 +39,7 @@ const Dashboard = () => {
 
           setToggle(!toggle);
           if (res.status === 200) {
-            toast.success("Bookings records Deleted Successfully!");
+            toast.success("Booking records Deleted Successfully!");
           }
         })
         .catch((err) => {
@@ -50,21 +51,46 @@ const Dashboard = () => {
     }
   };
 
-  const getStatusLabel = (statuss) => {
-    return statuss === 0 ? (
-      <span className="px-4 py-1 text-xs rounded-full bg-gray-500 text-white font-bold">
-        pending...
-      </span>
-    ) : (
-      <span className="px-4 py-1 text-xs rounded-full bg-green-500 text-white">
-        Approved
-      </span>
-    );
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 0:
+        return (
+          <span className="px-4 py-1 text-xs rounded-full bg-gray-500 text-white font-bold">
+            Pending
+          </span>
+        );
+      case 1:
+        return (
+          <span className="px-4 py-1 text-xs rounded-full bg-green-500 text-white">
+            Approved
+          </span>
+        );
+      case 2:
+        return (
+          <span className="px-4 py-1 text-xs rounded-full bg-red-500 text-white">
+            Rejected
+          </span>
+        );
+      case 3:
+        return (
+          <span className="px-4 py-1 text-xs rounded-full bg-yellow-500 text-white">
+            Canceled
+          </span>
+        );
+      case 4:
+        return (
+          <span className="px-4 py-1 text-xs rounded-full bg-blue-500 text-white">
+            Dropped
+          </span>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="w-full overflow-x-auto">
-      <h1>List of Bookings</h1>
+      <h1 className="text-2xl font-bold my-4">List of My Bookings</h1>
       <table className="w-full">
         <thead className="bg-blue-500 text-white">
           <tr>
@@ -97,14 +123,14 @@ const Dashboard = () => {
                   <div
                     className="cursor-pointer text-red-700"
                     onClick={() => {
-                      handleDelete(val.id);
+                      handleDelete(val.bid);
                     }}
                   >
                     <AiFillDelete />
                   </div>
 
                   <div className="cursor-pointer text-green-700">
-                    <Link to={`/singlebooking/${val.id}`}>
+                    <Link to={`/singledash/${userid}/${val.bid}`}>
                       <FaEye />
                     </Link>
                   </div>

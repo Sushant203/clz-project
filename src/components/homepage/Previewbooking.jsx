@@ -1,12 +1,14 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Previewbooking = ({
   showPreview,
   setShowPreview,
   selectedCab,
   selectedSourceDestination,
+  locationid,
   km,
   unitPrice,
 }) => {
@@ -28,13 +30,21 @@ const Previewbooking = ({
       const url = "http://localhost:8000/book";
       const dataToSubmit = {
         cabid: selectedCab.cid,
+        driverid: selectedCab.driverid,
+        locationid: locationid,
         userid: userid,
+
       };
 
       const response = await axios.post(url, dataToSubmit);
       console.log("Response:", response.data);
+      if (response.status === 200) {
+        toast.success("Cab booked Successfully!!");
+      }
       // Handle success or any other logic here
     } catch (error) {
+      toast.error("cannot book the cab!!");
+
       // Handle error here
       console.error("Error:", error);
     } finally {
@@ -87,9 +97,12 @@ const Previewbooking = ({
               <Form className="">
                 {/* Hidden fields for cabid, userid, locationid, and driverid */}
                 <Field type="hidden" name="cabid" value={selectedCab.cid} />
+                <Field type="hidden" name="driverid" value={selectedCab.driverid} />
+                <Field type="hidden" name="locationid" value={locationid} />
                 <Field type="hidden" name="userid" value={userid} />
 
                 <div className="flex flex-col sm:flex-row justify-center">
+                  <ToastContainer />
                   <button
                     type="button"
                     className="bg-red-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0 sm:mr-2"

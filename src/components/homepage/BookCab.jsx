@@ -100,8 +100,8 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
       setSelectedSourceDestination(selectedLocation.source_destination);
       setKm(selectedLocation.km);
       setTotalKm(selectedLocation.km);
-      setLocationId(selectedLocation.id);
-      console.log(selectedLocation.id, "id of loction");
+      setLocationId(selectedLocation.lid);
+      console.log(selectedLocation.lid, "id of loction");
     }
     // if (selectedLocations) {
     //   setSelectedSourceDestination(selectedLocation.km);

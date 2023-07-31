@@ -10,6 +10,11 @@ import Dashboard from "./components/navbar/Dashboard";
 import Login from "./components/login/Login";
 import "react-toastify/dist/ReactToastify.css";
 import Previewbooking from "./components/homepage/Previewbooking";
+import SingleDashboard from "./components/navbar/SingleDashboard";
+import Setting from "./components/setting/Setting";
+import EditProfile from "./components/setting/profile/EditProfile";
+
+
 function App() {
   return (
     <div>
@@ -24,6 +29,9 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/previewbooking" element={<Previewbooking />} />
+            <Route path='/singledash/:userid/:bid' element={<SingleDashboard />} />
+            <Route path='/setting' element={<Setting />} />
+            <Route path='/setting/editprofile/:id' element={<EditProfile />} />
           </Route>
         </Routes>
       </Router>

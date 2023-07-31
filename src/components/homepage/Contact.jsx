@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as yup from "yup";
 import {
   AiOutlinePhone,
@@ -71,10 +73,11 @@ const Contact = () => {
     try {
       axios.post("http://localhost:8000/contact", values).then((res) => {
         if (res.status === 200) {
-          console.log("data posted successfully");
+          toast.success("data posted successfully");
         }
       });
     } catch (error) {
+      toast.error("Data cannot be posted")
       console.log(error);
     }
   };
@@ -95,9 +98,8 @@ const Contact = () => {
             key={i}
             href={val.href}
             target={val.target}
-            className={`py-1 flex items-center gap-1 ${
-              hoveredIndex === i ? "bg-white" : ""
-            }`}
+            className={`py-1 flex items-center gap-1 ${hoveredIndex === i ? "bg-white" : ""
+              }`}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
@@ -153,6 +155,7 @@ const Contact = () => {
                 </div>
               ))}
               <div className="w-full text-center">
+                <ToastContainer />
                 <button
                   type="submit"
                   className="px-4 py-2 rounded-md mt-4 text-white bg-primary"
