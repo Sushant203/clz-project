@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 const Previewbooking = ({
   showPreview,
   setShowPreview,
@@ -12,6 +13,7 @@ const Previewbooking = ({
   km,
   unitPrice,
 }) => {
+  const navigate = useNavigate();
   // Calculate total fare
   const totalFare = km * unitPrice;
   const userid = localStorage.getItem("user_id");
@@ -40,6 +42,8 @@ const Previewbooking = ({
       console.log("Response:", response.data);
       if (response.status === 200) {
         toast.success("Cab booked Successfully!!");
+        navigate('/availablecabs')
+
       }
       // Handle success or any other logic here
     } catch (error) {
@@ -113,6 +117,7 @@ const Previewbooking = ({
                   <button
                     type="submit"
                     className="bg-green-500 text-white font-bold py-2 px-4 rounded mt-2 sm:mt-0"
+
                   >
                     Submit
                   </button>

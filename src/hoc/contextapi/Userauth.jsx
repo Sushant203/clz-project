@@ -5,14 +5,33 @@ export const UserAuthContext = createContext();
 const UserAuthContextapi = ({ children }) => {
   const navigate = useNavigate();
   const [Token, setToken] = useState("");
+
   useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Check if the user is navigating within the application or leaving the site
+      const internalNavigation =
+        e.currentTarget.performance.navigation.type === 1;
+
+      // Clear the token from localStorage only if the user is leaving the site (not on internal navigation)
+      if (!internalNavigation) {
+        localStorage.removeItem("token");
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
       navigate("/");
     } else {
       navigate("/login");
     }
-  }, [localStorage]);
+
+    return () => {
+      // Cleanup: Remove the event listener when the component is unmounted
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <UserAuthContext.Provider
