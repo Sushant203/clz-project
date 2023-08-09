@@ -2,6 +2,7 @@ import React from "react";
 import cab4 from "../resources/images/cab4.jpg";
 import cab1 from "../resources/images/cab1.png";
 import cab2 from "../resources/images/cab2.png";
+import logo from '../resources/images/logo.png'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -47,6 +48,10 @@ const Home = () => {
   return (
     <UserAuthContextapi>
       <div className="">
+        <div className="container border-b-2 border-primary flex justify-center gap-24">
+          <img src={logo} alt="logos" height={70} width={70} />
+          <h2 className="block text-2xl font-bold py-4">Online Cab Booking System</h2>
+        </div>
         {/* upper body */}
         <div className="border-none shadow-lg shadow-slate-400 flex justify-center h-[41rem] items-center w-full">
           <div className="w-full pb-8 overflow-x-hidden  ">

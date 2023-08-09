@@ -132,14 +132,18 @@ const Signup = () => {
         .then((res) => {
           if (res.status === 200) {
             toast.success("Registered successfully");
-          } else {
+          } else if (res.status === 500) {
             toast.error("error occured!!");
           }
         })
         .catch((err) => {
+          toast.error("Email is already Registered Use different email")
+
           console.log(err);
         });
     } catch (error) {
+      toast.error("Email is already Registered Use different email")
+
       console.log(error);
     }
   };
@@ -160,10 +164,10 @@ const Signup = () => {
             gender: "",
           }}
           validationSchema={schema}
-          onSubmit={(val, { resetForm }) => {
+          onSubmit={(val) => {
             console.log(val);
             Submit(val);
-            resetForm();
+
           }}
         >
           {({ handleSubmit }) => {
@@ -284,16 +288,14 @@ const Signup = () => {
                     </h2>
                   </div>
                 </div>
-                <ToastContainer />
                 <button
                   type="submit"
                   className={`px-5 py-2 capitalize bg-primary text-white w-full font-bold
                         
-                      ${
-                        clickedCheckBox
-                          ? "opacity-100 cursor-pointer transition-all hover:scale-105 ease-in-out duration-300 "
-                          : " opacity-50 cursor-not-allowed"
-                      } rounded-md
+                      ${clickedCheckBox
+                      ? "opacity-100 cursor-pointer transition-all hover:scale-105 ease-in-out duration-300 "
+                      : " opacity-50 cursor-not-allowed"
+                    } rounded-md
                      `}
                   disabled={clickedCheckBox ? "" : "disabled "}
                 >
@@ -304,6 +306,8 @@ const Signup = () => {
           }}
         </Formik>
       </div>
+      <ToastContainer className=' absolute bottom-2' />
+
     </div>
   );
 };

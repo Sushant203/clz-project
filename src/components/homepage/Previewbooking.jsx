@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 const Previewbooking = ({
+  setPopup,
   showPreview,
   setShowPreview,
   selectedCab,
@@ -41,14 +42,21 @@ const Previewbooking = ({
       const response = await axios.post(url, dataToSubmit);
       console.log("Response:", response.data);
       if (response.status === 200) {
-        toast.success("Cab booked Successfully!!");
-        navigate('/availablecabs')
+        toast.success("Cab booked Successfully wait for approval !!");
+        setTimeout(() => {
+          setShowPreview(false)
+          setPopup(false)
+        }, 2000);
+
 
       }
       // Handle success or any other logic here
     } catch (error) {
-      toast.error("cannot book the cab!!");
+      toast.error("Please Select Location(Source and Destination)!");
+      setTimeout(() => {
+        setShowPreview(false)
 
+      }, 1000);
       // Handle error here
       console.error("Error:", error);
     } finally {

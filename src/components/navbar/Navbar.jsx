@@ -20,6 +20,7 @@ const useOutsideClick = (ref, callback) => {
 };
 
 const Navbar = () => {
+
   const [Users, setUsers] = useState([]);
   const userid = localStorage.getItem("user_id");
   const fetchData = () => {
@@ -135,23 +136,29 @@ const Navbar = () => {
           {/* /> */}
           {isOpen && (
             <div className="absolute right-28 mt-2  w-fit bg-white rounded-md shadow-lg z-20">
+              {/* profile */}
+              <Link to={`/profile/${userid}`}>
+                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+                  Profile
+                </div>
+              </Link>
+              {/* settings */}
+              {/* <Link to="/setting">
+                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+                  Setting
+                </div>
+              </Link> */}
+              <Link to="/dashboard">
+                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
+                  Dashboard
+                </div>
+              </Link>
               <button
                 className="block px-4 py-1 text-gray-800 w-full hover:text-white hover:bg-primary"
                 onClick={handleLogout}
               >
                 Logout
               </button>
-              {/* settings */}
-              <Link to="/setting">
-                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
-                  Setting
-                </div>
-              </Link>
-              <Link to="/dashboard">
-                <div className="block px-4 py-1 w-full text-gray-800 hover:text-white hover:bg-primary">
-                  Dashboard
-                </div>
-              </Link>
             </div>
           )}
         </h3>

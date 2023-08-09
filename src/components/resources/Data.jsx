@@ -13,7 +13,7 @@ const Data = [
   },
   {
     name: "Available Cabs",
-    path: "/available cabs",
+    path: "/availablecabs",
   },
 ];
 export default Data;

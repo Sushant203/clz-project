@@ -32,6 +32,7 @@ const AvailableCabs = () => {
     setPopup(true);
   };
 
+
   const handleInputChange = (e) => {
     setSearchText(e.target.value);
   };
@@ -100,9 +101,8 @@ const AvailableCabs = () => {
                 {filteredItems.map((val, i) => (
                   <div key={i} className="w-full">
                     <div
-                      className={`border-2 rounded-lg p-3 capitalize flex flex-col items-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 border-purple-400 ${
-                        val.status === 0 ? "opacity-70 pointer-events-none" : ""
-                      }`}
+                      className={`border-2 rounded-lg p-3 capitalize flex flex-col items-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 border-purple-400 ${val.status === 0 ? "opacity-70 pointer-events-none" : ""
+                        }`}
                     >
                       <img
                         src={`http://localhost:8000/${val.cimage}`}
@@ -136,9 +136,8 @@ const AvailableCabs = () => {
               {Cabs.map((val, i) => (
                 <div key={i} className="w-full">
                   <div
-                    className={`rounded-lg p-3 capitalize flex flex-col items-center bg-gray-100 border-2 hover:translate-y-0.5 ${
-                      val.status === 0 ? "opacity-70 pointer-events-none" : ""
-                    }`}
+                    className={`rounded-lg p-3 capitalize flex flex-col items-center bg-gray-100 border-2 hover:translate-y-0.5 ${val.status === 0 ? "opacity-70 pointer-events-none" : ""
+                      }`}
                     onClick={() => handlePopup(val)}
                   >
                     <img

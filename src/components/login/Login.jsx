@@ -43,12 +43,14 @@ const Login = () => {
         const user_id = res.data.user[0].id;
         localStorage.setItem("user_id", user_id);
         localStorage.setItem("token", res.data.token);
-        navigate("/");
-      } else {
-        toast.error("Login unsuccessful");
+        setTimeout(() => {
+          navigate("/");
+
+        }, 1000);
       }
       console.log(res);
     } catch (error) {
+      toast.error("Email or Password Does not Match")
       console.log(error);
     }
   };
@@ -110,7 +112,7 @@ const Login = () => {
                             />
                           </div>
                         ))}
-                        <ToastContainer position="bottom-left" />
+
                         <button
                           type="submit"
                           className="border-none py-2 px-10 rounded-lg text-xl font-semibold shadow-md shadow-white hover:bg-primary"
@@ -127,6 +129,7 @@ const Login = () => {
                   )}
                 </Formik>
               </div>
+              <ToastContainer />
             </div>
           )}
         </UserAuthContext.Consumer>

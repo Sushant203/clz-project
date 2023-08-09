@@ -134,6 +134,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
             totalKm={totalKm}
             unitPrice={unitPrice}
             locationid={locationid}
+            setPopup={setPopup}
           />
         </div>
       )}

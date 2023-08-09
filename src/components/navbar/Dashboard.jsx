@@ -87,6 +87,11 @@ const Dashboard = () => {
         return null;
     }
   };
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
+  };
 
   return (
     <div className="w-full overflow-x-auto">
@@ -113,7 +118,7 @@ const Dashboard = () => {
               <td className="hidden sm:table-cell px-6 py-4">{val.name}</td>
               <td className="hidden sm:table-cell px-6 py-4">{val.dname}</td>
               <td className="hidden md:table-cell px-6 py-4">
-                {val.booked_at}
+                {formatDate(val.booked_at)}
               </td>
               <td className="px-6 py-4  sm:flex-row  sm:justify-start hidden sm:table-cell">
                 {getStatusLabel(val.statuss)}

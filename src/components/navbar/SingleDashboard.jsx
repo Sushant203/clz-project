@@ -123,6 +123,9 @@ const SingleDashboard = () => {
                         <p className="text-gray-500">
                             <span className="font-bold text-black text-md">Driver's Phone</span>: {val.phone}
                         </p>
+                        <p className="text-gray-500">
+                            <span className="font-bold text-black text-md">Driver's License no.</span>: {val.licenseno}
+                        </p>
 
                         <p className="text-gray-500">
                             <span className="font-bold text-black text-md">Selected Location</span>: {val.source_destination}

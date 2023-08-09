@@ -13,6 +13,7 @@ import Previewbooking from "./components/homepage/Previewbooking";
 import SingleDashboard from "./components/navbar/SingleDashboard";
 import Setting from "./components/setting/Setting";
 import EditProfile from "./components/setting/profile/EditProfile";
+import ViewProfile from "./components/setting/profile/ViewProfile";
 
 
 function App() {
@@ -30,8 +31,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/previewbooking" element={<Previewbooking />} />
             <Route path='/singledash/:userid/:bid' element={<SingleDashboard />} />
-            <Route path='/setting' element={<Setting />} />
-            <Route path='/setting/editprofile/:id' element={<EditProfile />} />
+            {/* <Route path='/setting' element={<Setting />} /> */}
+            <Route path='/profile/editprofile/:id' element={<EditProfile />} />
+            <Route path="/profile/:id" element={<ViewProfile />} />
           </Route>
         </Routes>
       </Router>

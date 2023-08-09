@@ -37,6 +37,7 @@ const schema = yup.object().shape({
     gender: yup.string().required(" please select your gender"),
 });
 const EditProfile = () => {
+    const userid = localStorage.getItem('user_id')
     const navigate = useNavigate();
     const location = useLocation();
     // const { id } = useParams();
@@ -137,7 +138,9 @@ const EditProfile = () => {
                     if (res.status === 200) {
                         toast.success("Registered successfully");
                         localStorage.clear();
-                        navigate('/login')
+                        setTimeout(() => {
+                            navigate(`/profile/${userid}`)
+                        }, 1000);
                     } else {
                         toast.error("error occured!!");
                     }
