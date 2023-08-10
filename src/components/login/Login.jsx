@@ -5,11 +5,11 @@ import { BsFillKeyFill } from "react-icons/bs";
 import { IoMail } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserAuthContextapi from "../../hoc/contextapi/Userauth";
-import { UserAuthContext } from "../../hoc/contextapi/Userauth";
+// import UserAuthContextapi from "../../hoc/contextapi/Userauth";
+// import { UserAuthContext } from "../../hoc/contextapi/Userauth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import LoginImage from '../resources/images/loginimage.png'
 // formik yup validation
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Username is required"),
@@ -57,83 +57,81 @@ const Login = () => {
 
   return (
     <div>
-      <UserAuthContextapi>
-        <UserAuthContext.Consumer>
-          {(context) => (
-            <div className="min-h-screen flex justify-center items-center bg-gradient-to-tr from-[#A2F2FC] via-[#379299] to-primary">
-              <div className="w-full">
-                <Formik
-                  initialValues={{
-                    email: "",
-                    password: "",
-                  }}
-                  validationSchema={schema}
-                  onSubmit={(val) => {
-                    console.log(val);
-                    submit(val);
-                    // toast.success("log in susccess");
-                  }}
+
+
+      <div className="min-h-screen flex justify-center items-center " style={{ backgroundImage: `url(${LoginImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+        <div className="w-full">
+          <Formik
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+            validationSchema={schema}
+            onSubmit={(val) => {
+              console.log(val);
+              submit(val);
+              // toast.success("log in susccess");
+            }}
+          >
+            {({ handleSubmit }) => (
+              <div className="flex justify-center items-center">
+                <Form
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-4 justify-center items-center capitalize border-none shadow-xl shadow-slate-500 rounded-lg h-fit w-96 py-8 backdrop-filter backdrop-blur-xl bg-opacity-0 bg-white"
                 >
-                  {({ handleSubmit }) => (
-                    <div className="flex justify-center items-center">
-                      <Form
-                        onSubmit={handleSubmit}
-                        className="flex flex-col gap-4 justify-center items-center capitalize border-none shadow-xl shadow-slate-500 rounded-lg h-fit w-96 py-8 backdrop-filter backdrop-blur-md bg-opacity-0 bg-white"
-                      >
-                        <div className="flex flex-col gap-3 text-center font-bold text-2xl py-5">
-                          <h2>Welcome</h2>
-                          <h2>Login to your account</h2>
-                        </div>
+                  <div className="flex flex-col gap-3 text-center font-bold text-2xl py-5">
+                    <h2>Online Cab Booking System</h2>
+                    <h2>Login to your account</h2>
+                  </div>
 
-                        {Data.map((val, i) => (
-                          <div key={i} className="flex flex-col gap-1 relative">
-                            <label htmlFor={val.name} className="text-center">
-                              {val.name}
-                            </label>
-                            {/* Inserting icons */}
-                            <div className="">
-                              {val.name === "email" && (
-                                <IoMail className="font-medium text-2xl absolute top-11 ml-3" />
-                              )}
-                              {val.name === "password" && (
-                                <BsFillKeyFill className="border-r-2 border-slate-600 text-2xl absolute top-11 ml-3" />
-                              )}
-                            </div>
-                            <Field
-                              type={val.type}
-                              name={val.name}
-                              placeholder={`Enter your ${val.name}`}
-                              className="border-b border-black rounded-sm shadow-md shadow-white focus:outline-none focus:border-black py-2.5 px-12"
-                            />
-                            <ErrorMessage
-                              name={val.name}
-                              component={"div"}
-                              className="text-red-500"
-                            />
-                          </div>
-                        ))}
-
-                        <button
-                          type="submit"
-                          className="border-none py-2 px-10 rounded-lg text-xl font-semibold shadow-md shadow-white hover:bg-primary"
-                        >
-                          Login
-                        </button>
-                        <div className="flex gap-5 capitalize hover:underline hover:font-bold">
-                          <Link to="/signup">
-                            <h4>Create new account</h4>
-                          </Link>
-                        </div>
-                      </Form>
+                  {Data.map((val, i) => (
+                    <div key={i} className="flex flex-col gap-1 relative">
+                      <label htmlFor={val.name} className="text-center">
+                        {val.name}
+                      </label>
+                      {/* Inserting icons */}
+                      <div className="">
+                        {val.name === "email" && (
+                          <IoMail className="font-medium text-2xl absolute top-11 ml-3" />
+                        )}
+                        {val.name === "password" && (
+                          <BsFillKeyFill className="border-r-2 border-slate-600 text-2xl absolute top-11 ml-3" />
+                        )}
+                      </div>
+                      <Field
+                        type={val.type}
+                        name={val.name}
+                        placeholder={`Enter your ${val.name}`}
+                        className="border-b border-black rounded-sm shadow-md shadow-white focus:outline-none focus:border-black py-2.5 px-12"
+                      />
+                      <ErrorMessage
+                        name={val.name}
+                        component={"div"}
+                        className="text-red-500"
+                      />
                     </div>
-                  )}
-                </Formik>
+                  ))}
+
+                  <button
+                    type="submit"
+                    className="border-none py-2 px-10 rounded-lg text-white text-xl font-semibold shadow-md shadow-white hover:bg-primary"
+                  >
+                    Login
+                  </button>
+                  <div className="flex gap-5 capitalize hover:underline hover:font-bold">
+                    <Link to="/signup">
+                      <h4 className="text-white font-bold">Create new account</h4>
+                    </Link>
+                  </div>
+                </Form>
               </div>
-              <ToastContainer />
-            </div>
-          )}
-        </UserAuthContext.Consumer>
-      </UserAuthContextapi>
+            )}
+          </Formik>
+        </div>
+        <ToastContainer />
+      </div>
+
+
     </div>
   );
 };

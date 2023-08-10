@@ -19,6 +19,7 @@ const ViewProfile = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line
     }, []);
 
     const formatDate = (dateString) => {
@@ -33,7 +34,7 @@ const ViewProfile = () => {
                     if (res.status === 200) {
                         toast.success("Account Deleted Successfully");
                         localStorage.clear();
-                        navigate('/login')
+                        navigate('/landing')
                     }
                     else if (res.status === 500) {
                         toast.error("Account cannot be deleted")

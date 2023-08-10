@@ -61,7 +61,8 @@ const Navbar = () => {
   ];
   // profile logout and setting dropdown logic
   const [isOpen, setIsOpen] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
+  // const [showDashboard, setShowDashboard] = useState(false);
+  // console.log(showDashboard)
   const profileRef = useRef();
 
   const toggleDropdown = (event) => {
@@ -78,14 +79,14 @@ const Navbar = () => {
   //logout
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/landing");
   };
   //setting
-  const handleSettings = () => { };
+  // const handleSettings = () => { };
 
-  const handleDashboardClick = () => {
-    setShowDashboard(true);
-  };
+  // const handleDashboardClick = () => {
+  //   setShowDashboard(true);
+  // };
 
   return (
     <nav>

@@ -76,6 +76,12 @@ const SingleDashboard = () => {
         else if (statuss === 4) return 'dropped';
         else return '';
     };
+    console.log(getStatusLabel)
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
 
     return (
         <div className="container mx-auto py-8">
@@ -131,7 +137,10 @@ const SingleDashboard = () => {
                             <span className="font-bold text-black text-md">Selected Location</span>: {val.source_destination}
                         </p>
                         <p className="text-gray-500">
-                            <span className="font-bold text-black text-md">Date_updated(approve/cancel/reject)</span>:{val.updated_date}
+                            <span className="font-bold text-black text-md">Booked Date(approve/cancel/reject/Dropped)</span>:{formatDate(val.booked_at)}
+                        </p>
+                        <p className="text-gray-500">
+                            <span className="font-bold text-black text-md">Date_updated(approve/cancel/reject/Dropped)</span>:{formatDate(val.updated_date)}
                         </p>
                         <p className="text-gray-500">
                             <span className="font-bold text-black text-md">Total Distance</span>: {val.km} KM.

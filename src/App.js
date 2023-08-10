@@ -14,6 +14,8 @@ import SingleDashboard from "./components/navbar/SingleDashboard";
 import Setting from "./components/setting/Setting";
 import EditProfile from "./components/setting/profile/EditProfile";
 import ViewProfile from "./components/setting/profile/ViewProfile";
+import Landing from "./components/landingpage/Landing";
+import DriverForm from "./components/driverRequest/DriverForm";
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
             {/* <Route path='/setting' element={<Setting />} /> */}
             <Route path='/profile/editprofile/:id' element={<EditProfile />} />
             <Route path="/profile/:id" element={<ViewProfile />} />
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/drivingrequest" element={<DriverForm />} />
           </Route>
         </Routes>
       </Router>

@@ -90,14 +90,18 @@ const Previewbooking = ({
                   <span className="font-semibold">Cab number</span>:{" "}
                   {selectedCab.cnumber}
                 </p>
-
-                <p className="text-lg">
-                  Status:{" "}
-                  {selectedCab.status === 1 ? "Available" : "Not Available"}
+                <p className="text-lg text">
+                  <span className="font-semibold">Cab Driver's Name</span>:{" "}
+                  {selectedCab.dname}
                 </p>
-                <p className="text-lg">Location: {selectedSourceDestination}</p>
-                <p className="text-lg">Km: {km} km</p>
-                <p className="text-lg">Total Fare: Rs. {totalFare}</p>
+
+                <p className="text-lg font-semibold">
+                  Status:{" "}
+                  <span className="bg-green-500 rounded-lg px-2 text-white text-sm">{selectedCab.status === 1 ? "Available" : "Not Available"}</span>
+                </p>
+                <p className="text-lg font-semibold">Location: <span className="font-normal">{selectedSourceDestination}</span></p>
+                <p className="text-lg font-bold">Km: {km} km</p>
+                <p className="text-lg font-semibold">Total Fare: Rs. {totalFare}</p>
                 {/* Add more fields as per your cab data */}
               </div>
             </div>

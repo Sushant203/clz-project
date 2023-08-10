@@ -14,16 +14,16 @@ function UserAuthContextApi({ children }) {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
-      if (location.pathname === '/login') {
+      if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/landing') {
         navigate('/')
       }
     } else {
-      navigate('/login');
+      navigate('/landing');
     }
     // eslint-disable-next-line
   }, [localStorage]);
   return (
-    <UserAuthContext.Provider value={{ name: 'kisan', tokn: localStorage.getItem('token') }}>
+    <UserAuthContext.Provider value={{ name: 'himakl', tokn: localStorage.getItem('token') }}>
       {children}
     </UserAuthContext.Provider>
   )

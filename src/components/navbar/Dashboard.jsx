@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AiFillDelete, AiOutlineVerticalRight } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +24,7 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line 
   }, []);
 
   useEffect(() => {
@@ -31,24 +32,28 @@ const Dashboard = () => {
   }, [fetchData, toggle]);
 
   const handleDelete = (id) => {
-    try {
-      axios
-        .delete(`http://localhost:8000/book/${id}`)
-        .then((res) => {
-          console.log(res.data);
+    const confirmDelete = window.confirm("Are you sure you want to delete your Bookings History")
+    if (confirmDelete) {
+      try {
+        axios
+          .delete(`http://localhost:8000/book/${id}`)
+          .then((res) => {
+            console.log(res.data);
 
-          setToggle(!toggle);
-          if (res.status === 200) {
-            toast.success("Booking records Deleted Successfully!");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error("Cannot Delete Cab Record!");
-        });
-    } catch (error) {
-      console.log(error);
+            setToggle(!toggle);
+            if (res.status === 200) {
+              toast.success("Booking records Deleted Successfully!");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("Cannot Delete Cab Record!");
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
+
   };
 
   const getStatusLabel = (status) => {
@@ -96,10 +101,10 @@ const Dashboard = () => {
   return (
     <div className="w-full overflow-x-auto">
       <h1 className="text-2xl font-bold my-4">List of My Bookings</h1>
-      <table className="w-full">
+      <table className="w-full text-center">
         <thead className="bg-blue-500 text-white">
           <tr>
-            <th className="px-6 py-3">Booking ID</th>
+            <th className="px-6 py-3">S.N.</th>
             <th className="px-6 py-3">Booked by</th>
             <th className="hidden sm:table-cell px-6 py-3">Selected Cab</th>
             <th className="hidden sm:table-cell px-6 py-3">Driver's Name</th>
@@ -111,7 +116,7 @@ const Dashboard = () => {
         <tbody className="bg-white divide-y divide-gray-200">
           {datas.map((val, i) => (
             <tr key={i} className={i % 2 === 0 ? "bg-blue-100" : "bg-blue-50"}>
-              <td className="px-6 py-4">{val.id}</td>
+              <td className="px-6 py-4">{i + 1}</td>
               <td className="px-6 py-4">
                 {val.firstname} {val.middlename} {val.lastname}
               </td>
