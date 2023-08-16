@@ -10,14 +10,16 @@ const Landing = () => {
     const topItems = [
 
         {
-            name: "Click Here for Driving Cab",
+            name: "Driver Registration",
             path: "/drivingrequest"
         },
 
     ];
     const headingLines = [
         "Online Cab Booking System",
-        "Your Journey, Our Priority"
+        "Your Journey, Our Priority",
+        "Journey with Confidence",
+        "Ride Easy, Book Online"
     ];
     const [currentLineIndex, setCurrentLineIndex] = useState(0);
     const [currentLine, setCurrentLine] = useState("");
@@ -91,7 +93,7 @@ const Landing = () => {
                                     </p>
                                     <div className="flex flex-col md:flex-row gap-3">
                                         <div
-                                            className="px-4 py-2 bg-white text-blue-800 font-semibold rounded-full cursor-pointer hover:bg-blue-800 hover:text-white transition duration-300 mb-3 md:mb-0"
+                                            className="px-4 py-2 bg-white text-blue-800 font-semibold rounded-full cursor-pointer hover:bg-blue-800 hover:text-white transition duration-300 mb-3 md:mb-0 text-center"
                                             onClick={() => {
                                                 navigate('/login')
                                             }}
@@ -99,7 +101,7 @@ const Landing = () => {
                                             Book Now
                                         </div>
                                         <div
-                                            className="px-4 py-2 border-2 border-white text-white font-semibold rounded-full cursor-pointer hover:border-blue-800 hover:text-blue-800 transition duration-300"
+                                            className="px-4 py-2 border-2 border-white text-white font-semibold rounded-full cursor-pointer hover:border-blue-800 hover:text-blue-800 transition duration-300 text-center"
                                             onClick={() => {
                                                 navigate('/login')
                                             }}

@@ -86,7 +86,7 @@ const Login = () => {
 
                   {Data.map((val, i) => (
                     <div key={i} className="flex flex-col gap-1 relative">
-                      <label htmlFor={val.name} className="text-center">
+                      <label htmlFor={val.name} className="text-center ">
                         {val.name}
                       </label>
                       {/* Inserting icons */}

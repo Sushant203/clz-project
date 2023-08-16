@@ -24,7 +24,7 @@ const DriverForm = () => {
         },
         {
             name: "driverlicense",
-            type: "text",
+            type: "number",
             label: "License Number",
             placeholder: "Enter license number",
         },
