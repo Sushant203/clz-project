@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import {
   AiOutlinePhone,
@@ -17,34 +17,33 @@ const schema = yup.object().shape({
   phone: yup.string().required("Phone is required"),
   message: yup.string().required("Message is required"),
 });
+export const contactMethods = [
+  {
+    icon: <AiOutlinePhone className="text-4xl rounded-md  bg-[#10a310]" />,
+    name: "phone",
+    href: "tel:977-9802153267",
+  },
+  {
+    icon: <AiOutlineMail className="text-4xl rounded-md bg-[#366adb]" />,
+    name: "email",
+    href: "mailto:shrestha.krisna99@gmail.com",
+  },
+  {
+    icon: <AiOutlineFacebook className="text-4xl rounded-md bg-[#1777F2]" />,
+    name: "Facebook",
+    href: "https://www.facebook.com/himal.fullel",
+    target: "_blank",
+  },
+  {
+    icon: (
+      <AiOutlineInstagram className="text-4xl rounded-md bg-gradient-to-tr from-[#FEDA77] via-[#DB171B] via-[#A9128C] via-[#A14BCA] to-[#6248CD] " />
+    ),
+    name: "Instagram",
+    href: "https://www.instagram.com/sushant.stha22/",
+    target: "_blank",
+  },
+];
 const Contact = () => {
-  const contactMethods = [
-    {
-      icon: <AiOutlinePhone className="text-4xl rounded-md  bg-[#10a310]" />,
-      name: "phone",
-      href: "tel:977-9802153267",
-    },
-    {
-      icon: <AiOutlineMail className="text-4xl rounded-md bg-[#366adb]" />,
-      name: "email",
-      href: "mailto:shrestha.krisna99@gmail.com",
-    },
-    {
-      icon: <AiOutlineFacebook className="text-4xl rounded-md bg-[#1777F2]" />,
-      name: "Facebook",
-      href: "https://www.facebook.com/himal.fullel",
-      target: "_blank",
-    },
-    {
-      icon: (
-        <AiOutlineInstagram className="text-4xl rounded-md bg-gradient-to-tr from-[#FEDA77] via-[#DB171B] via-[#A9128C] via-[#A14BCA] to-[#6248CD] " />
-      ),
-      name: "Instagram",
-      href: "https://www.instagram.com/sushant.stha22/",
-      target: "_blank",
-    },
-  ];
-
   //contact form data
   const formData = [
     {
@@ -77,7 +76,7 @@ const Contact = () => {
         }
       });
     } catch (error) {
-      toast.error("Data cannot be posted")
+      toast.error("Data cannot be posted");
       console.log(error);
     }
   };
@@ -98,8 +97,9 @@ const Contact = () => {
             key={i}
             href={val.href}
             target={val.target}
-            className={`py-1 flex items-center gap-1 ${hoveredIndex === i ? "bg-white" : ""
-              }`}
+            className={`py-1 flex items-center gap-1 ${
+              hoveredIndex === i ? "bg-white" : ""
+            }`}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
