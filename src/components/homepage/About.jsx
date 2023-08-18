@@ -6,7 +6,7 @@ const About = () => {
       <div className="bg-gray-100 p-8 rounded-lg shadow-md max-w-md">
         <h1 className="text-2xl font-bold mb-4">About Us</h1>
         <p>
-          Welcome to <span className="text-blue-500 font-bold">Your Company Name</span>, your trusted partner in hassle-free and convenient online cab booking services.
+          Welcome to <span className="text-blue-500 font-bold">Cab Booking System</span>, your trusted partner in hassle-free and convenient online cab booking services.
         </p>
         <p className="mt-2">
           Our mission is to provide you with a seamless travel experience by
@@ -14,7 +14,7 @@ const About = () => {
           them.
         </p>
         <p className="mt-2">
-          At <span className="text-blue-500 font-bold">Your Company Name</span>, we're committed to safety, comfort, and affordability, ensuring you can focus on enjoying your journey.
+          At <span className="text-blue-500 font-bold">Cab Booking system</span>, we're committed to safety, comfort, and affordability, ensuring you can focus on enjoying your journey.
         </p>
         <p className="mt-2">
           Whether you're commuting to work, catching a flight, or exploring the

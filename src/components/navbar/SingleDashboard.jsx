@@ -78,8 +78,17 @@ const SingleDashboard = () => {
     };
     console.log(getStatusLabel)
     const formatDate = (dateString) => {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true, // Use 12-hour clock
+        };
+
+        const formattedDate = new Date(dateString).toLocaleString(undefined, options);
+        return formattedDate;
     };
 
 
@@ -137,7 +146,10 @@ const SingleDashboard = () => {
                             <span className="font-bold text-black text-md">Selected Location</span>: {val.source_destination}
                         </p>
                         <p className="text-gray-500">
-                            <span className="font-bold text-black text-md">Booked Date(approve/cancel/reject/Dropped)</span>:{formatDate(val.booked_at)}
+                            <span className="font-bold text-black text-md">Booked Date</span>:{formatDate(val.booked_at)}
+                        </p>
+                        <p className="text-gray-500">
+                            <span className="font-bold text-black text-md">Booked for</span>:{formatDate(val.selecteddate)}
                         </p>
                         <p className="text-gray-500">
                             <span className="font-bold text-black text-md">Date_updated(approve/cancel/reject/Dropped)</span>:{formatDate(val.updated_date)}

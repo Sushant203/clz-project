@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+
 const Previewbooking = ({
   setPopup,
   showPreview,
@@ -13,7 +15,15 @@ const Previewbooking = ({
   locationid,
   km,
   unitPrice,
+  selectedDate,
+  setIsPreviewActive
 }) => {
+  useEffect(() => {
+    setIsPreviewActive(true); // Signal that Previewbooking is active
+    return () => {
+      setIsPreviewActive(false); // Reset when unmounting
+    };
+  }, [setIsPreviewActive]);
   const navigate = useNavigate();
   // Calculate total fare
   const totalFare = km * unitPrice;
@@ -36,6 +46,7 @@ const Previewbooking = ({
         driverid: selectedCab.driverid,
         locationid: locationid,
         userid: userid,
+        selecteddate: selectedDate.toISOString(),
 
       };
 
@@ -101,6 +112,14 @@ const Previewbooking = ({
                 </p>
                 <p className="text-lg font-semibold">Location: <span className="font-normal">{selectedSourceDestination}</span></p>
                 <p className="text-lg font-bold">Km: {km} km</p>
+                <p className="text-lg font-semibold">
+                  Booked For:
+                  <span className="font-normal">
+                    {format(selectedDate, "MMMM d, yyyy h:mm aa")}
+                  </span>
+                </p>
+
+
                 <p className="text-lg font-semibold">Total Fare: Rs. {totalFare}</p>
                 {/* Add more fields as per your cab data */}
               </div>
@@ -116,6 +135,8 @@ const Previewbooking = ({
                 <Field type="hidden" name="driverid" value={selectedCab.driverid} />
                 <Field type="hidden" name="locationid" value={locationid} />
                 <Field type="hidden" name="userid" value={userid} />
+                <Field type="hidden" name="selecteddate" value={selectedDate} />
+
 
                 <div className="flex flex-col sm:flex-row justify-center">
                   <ToastContainer />

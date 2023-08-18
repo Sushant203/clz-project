@@ -11,15 +11,15 @@ const schema = yup.object().shape({
   firstname: yup
     .string()
     .matches(
-      /^[a-zA-Z]+[a-zA-Z\s]*?[^0-9]$/,
-      "Username can only contain letters, numbers, and whitespace"
+      /^[a-zA-Z]+[a-zA-Z\s]$/,
+      "only letters and whitespace are allowed"
     )
     .required("firstname is required"),
   lastname: yup
     .string()
     .matches(
-      /^[a-zA-Z]+[a-zA-Z\s]*?[^0-9]$/,
-      "Username can only contain letters, numbers, and whitespace"
+      /^[a-zA-Z]+[a-zA-Z\s]$/,
+      " only letters and whitespace are allowed"
     )
     .required("lastname is required"),
   email: yup.string().email("invalid email").required("email is required"),

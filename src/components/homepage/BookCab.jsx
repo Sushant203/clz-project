@@ -1,17 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Previewbooking from "./Previewbooking";
 
 const BookCab = ({ popup, setPopup, selectedCab }) => {
   const [locationData, setlocationData] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
-  const [selectedSourceDestination, setSelectedSourceDestination] =
-    useState("");
+  const [selectedSourceDestination, setSelectedSourceDestination] = useState("");
   const [km, setKm] = useState(0);
-  const [totalKm, setTotalKm] = useState(0); // Added the state for total KM
+  const [totalKm, setTotalKm] = useState(0);
   const [unitPrice, setUnitPrice] = useState(50);
   const [locationid, setLocationId] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Initialize date with current date
+  const [isPreviewActive, setIsPreviewActive] = useState(false)
   const handleNextButtonClick = () => {
     setShowPreview(true);
   };
@@ -22,8 +25,7 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     // Make the Axios POST request
-    // axios
-    //   .post("http://localhost:8000/book", { ...values, km })
+    // axios.post("http://localhost:8000/book", { ...values, km })
     //   .then((response) => {
     //     // Handle successful response
     //     console.log(response.data);
@@ -45,15 +47,15 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
       options: "choose source and destination",
       locationData: [],
     },
+    // {
+    //   label: "price per KM:",
+    //   name: "unitprice",
+    //   type: "text",
+    //   value: `Rs. ${unitPrice}`,
+    //   readOnly: true,
+    // },
     {
-      label: "price per KM:",
-      name: "unitprice",
-      type: "text",
-      value: `Rs. ${unitPrice}`,
-      readOnly: true,
-    },
-    {
-      label: "Total KM:", // New field for total KM
+      label: "Total KM:",
       name: "km",
       type: "text",
       value: totalKm,
@@ -76,37 +78,16 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
     getLocationData();
   }, [getLocationData]);
 
-  // const handleSourceDestinationChange = (e) => {
-  //   const selectedLocation = locationData.find(
-  //     (location) => location.value === e.target.value
-  //   );
-  //   console.log(locationData.find(
-  //     (location) => location.value === e.target.value
-  //   ), "nej3jeujubh")
-  //   if (selectedLocation) {
-  //     setSelectedSourceDestination(selectedLocation.source_destination);
-  //     setKm(selectedLocation.km);
-  //     setTotalKm(selectedLocation.km); // Set the total KM based on the selected location's km
-  //   }
-  // };
   const handleSourceDestinationChange = (e) => {
     const selectedLocation = locationData.find(
       (location) => location.source_destination === e.target.value
     );
-    // const selectedLocations = locationData.find(
-    //   (location) => location.km === e.target.value
-    // )
     if (selectedLocation) {
       setSelectedSourceDestination(selectedLocation.source_destination);
       setKm(selectedLocation.km);
       setTotalKm(selectedLocation.km);
       setLocationId(selectedLocation.lid);
-      console.log(selectedLocation.lid, "id of loction");
     }
-    // if (selectedLocations) {
-    //   setSelectedSourceDestination(selectedLocation.km);
-    //   setSelectedSourceDestination(selectedLocation.totalKm)
-    // }
   };
 
   const locationDataa = [
@@ -135,6 +116,9 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
             unitPrice={unitPrice}
             locationid={locationid}
             setPopup={setPopup}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            setIsPreviewActive={setIsPreviewActive}
           />
         </div>
       )}
@@ -223,6 +207,27 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                         );
                       }
                     })}
+
+                    {/* Date Field */}
+                    <div className="py-2">
+                      <label htmlFor="date" className="font-medium capitalize">
+                        Select Date
+                      </label>
+                      <DatePicker
+                        id="date"
+                        name="date"
+                        selected={selectedDate}
+                        minDate={new Date()}
+                        onChange={(date) => setSelectedDate(date)}
+                        showTimeSelect            // Enable time selection
+                        timeFormat="HH:mm"        // Set the time format (24-hour format)
+                        timeIntervals={15}        // Set the time intervals (in minutes)
+                        timeCaption="Time"        // Label for the time selection dropdown
+                        dateFormat="MMMM d, yyyy h:mm aa" // Format for displaying the date and time
+                        className={`border outline-none rounded-md px-4 py-2 w-full ${isPreviewActive ? 'hidden' : 'block'}`}
+                      />
+
+                    </div>
                   </div>
                   <div className="flex justify-end py-2 gap-3 px-4">
                     {showPreview ? (

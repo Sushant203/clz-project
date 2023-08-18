@@ -93,10 +93,19 @@ const Dashboard = () => {
     }
   };
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true, // Use 12-hour clock
+    };
+
+    const formattedDate = new Date(dateString).toLocaleString(undefined, options);
     return formattedDate;
   };
+
 
   return (
     <div className="w-full overflow-x-auto">
@@ -107,8 +116,9 @@ const Dashboard = () => {
             <th className="px-6 py-3">S.N.</th>
             <th className="px-6 py-3">Booked by</th>
             <th className="hidden sm:table-cell px-6 py-3">Selected Cab</th>
-            <th className="hidden sm:table-cell px-6 py-3">Driver's Name</th>
             <th className="hidden md:table-cell px-6 py-3">Date Booked</th>
+            <th className="hidden sm:table-cell px-6 py-3">Booked for</th>
+
             <th className="px-6 py-3 hidden sm:table-cell">Status</th>
             <th className="px-6 py-3 text-right pr-12 sm:pr-6">Action</th>
           </tr>
@@ -121,10 +131,11 @@ const Dashboard = () => {
                 {val.firstname} {val.middlename} {val.lastname}
               </td>
               <td className="hidden sm:table-cell px-6 py-4">{val.name}</td>
-              <td className="hidden sm:table-cell px-6 py-4">{val.dname}</td>
               <td className="hidden md:table-cell px-6 py-4">
                 {formatDate(val.booked_at)}
               </td>
+              <td className="hidden sm:table-cell px-6 py-4">{formatDate(val.selecteddate)}</td>
+
               <td className="px-6 py-4  sm:flex-row  sm:justify-start hidden sm:table-cell">
                 {getStatusLabel(val.statuss)}
               </td>

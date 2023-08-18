@@ -27,7 +27,7 @@ const Footer = () => {
           <div className=" ">
             <h2>Join Our Community</h2>
             <div>
-              <input type="text" className="px-6 py-1.5 rounded-sm" />
+              <input type="text" className="px-6 py-1.5 rounded-sm text-black outline-none" />
               <button
                 type="Submit"
                 value="submit"
@@ -44,11 +44,11 @@ const Footer = () => {
                 href={val.href}
                 target={val.target}
 
-                // className={`py-1 flex items-center gap-1 ${
-                //   hoveredIndex === i ? "bg-white" : ""
-                // }`}
-                // onMouseEnter={() => setHoveredIndex(i)}
-                // onMouseLeave={() => setHoveredIndex(null)}
+              // className={`py-1 flex items-center gap-1 ${
+              //   hoveredIndex === i ? "bg-white" : ""
+              // }`}
+              // onMouseEnter={() => setHoveredIndex(i)}
+              // onMouseLeave={() => setHoveredIndex(null)}
               >
                 <p className="cursor-pointer">{val.icon}</p>
               </a>
