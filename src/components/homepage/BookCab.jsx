@@ -62,7 +62,12 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
       readOnly: true,
     },
   ];
-
+  const handleDateChange = (date) => {
+    const currentTime = new Date();
+    if (date >= currentTime) {
+      setSelectedDate(date);
+    }
+  };
   const getLocationData = useCallback(() => {
     try {
       axios.get("http://localhost:8000/location").then((res) => {
@@ -214,17 +219,16 @@ const BookCab = ({ popup, setPopup, selectedCab }) => {
                         Select Date
                       </label>
                       <DatePicker
-                        id="date"
-                        name="date"
                         selected={selectedDate}
+                        onChange={handleDateChange}
+                        showTimeSelect
+                        timeFormat="HH:mm"
+                        timeIntervals={15}
+                        timeCaption="Time"
+                        dateFormat="MMMM d, yyyy h:mm aa"
                         minDate={new Date()}
-                        onChange={(date) => setSelectedDate(date)}
-                        showTimeSelect            // Enable time selection
-                        timeFormat="HH:mm"        // Set the time format (24-hour format)
-                        timeIntervals={15}        // Set the time intervals (in minutes)
-                        timeCaption="Time"        // Label for the time selection dropdown
-                        dateFormat="MMMM d, yyyy h:mm aa" // Format for displaying the date and time
-                        className={`border outline-none rounded-md px-4 py-2 w-full ${isPreviewActive ? 'hidden' : 'block'}`}
+                        className={`border outline-none rounded-md px-4 py-2 w-full ${isPreviewActive ? 'hidden' : 'block'
+                          }`}
                       />
 
                     </div>
